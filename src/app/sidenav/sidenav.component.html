@@ -1,0 +1,79 @@
+<div layout="row" layout-align="start center" flex>
+</div>
+
+<div id="drawer-container">
+    <mat-nav-list td-sidenav-content id="side-nav">
+        <div class="header">
+            <button mat-icon-button (click)="onToggle()" class="burger-menu-button">
+                <mat-icon mat-list-avatar>
+                    menu
+                </mat-icon>
+            </button>
+            <h3 mat-line *ngIf="showFiller">
+                Miejscówka
+            </h3>
+            <!-- <img hide-xs *ngIf="showFiller" [routerLink]="['./initialPage']" src="assets/img/globe-logo-transparent.gif"
+                 class="globe-logo"> -->
+        </div>
+        <mat-divider></mat-divider>
+        <a id="search" mat-list-item>
+            <mat-icon mat-list-avatar>
+                search
+            </mat-icon>
+            <h3 mat-line *ngIf="showFiller">
+                Search
+            </h3>
+            <p mat-line *ngIf="showFiller">
+                Search by name or category
+            </p>
+        </a>
+        <a id="trending_down" mat-list-item>
+            <mat-icon mat-list-avatar>
+                trending_down
+            </mat-icon>
+            <h3 mat-line *ngIf="showFiller">
+                Free places
+            </h3>
+            <p mat-line *ngIf="showFiller">
+                Filter by the least crowded
+            </p>
+        </a>
+        <a id="trending_up" mat-list-item>
+            <mat-icon mat-list-avatar>
+                trending_up
+            </mat-icon>
+            <h3 mat-line *ngIf="showFiller">
+                Crowded places
+            </h3>
+            <p mat-line *ngIf="showFiller">
+                Filter by the most crowded
+            </p>
+        </a>
+        <a id="favorite" mat-list-item>
+            <mat-icon mat-list-avatar>
+                favorite
+            </mat-icon>
+            <h3 mat-line *ngIf="showFiller">
+                Favorite
+            </h3>
+            <p mat-line *ngIf="showFiller">
+                Filter by your favoritest
+            </p>
+        </a>
+    </mat-nav-list>
+
+    <mat-nav-list id="footer-list">
+        <a id="refresh" mat-list-item>
+            <mat-icon mat-list-avatar>refresh</mat-icon>
+            <h3 mat-line *ngIf="showFiller">
+                Refresh
+            </h3>
+        </a>
+        <a id="exit" mat-list-item>
+            <mat-icon mat-list-avatar>login</mat-icon>
+            <h3 mat-line *ngIf="showFiller">
+                Login
+            </h3>
+        </a>
+    </mat-nav-list>
+</div>

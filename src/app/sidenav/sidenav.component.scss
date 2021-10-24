@@ -1,0 +1,130 @@
+@import "../../variables.scss";
+
+// .mat-drawer-inner-container{
+//     overflow-x: hidden;
+//   }
+  
+  .header {
+      display: flex;
+      justify-content: left;
+
+      h3 {
+        padding-left: 4px;
+      }
+  }
+  
+  #drawer-container {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  
+    .mat-divider {
+      border-top-color: white;
+    }
+  
+    .burger-menu-button {
+      width: 2.75rem;
+      height: 2.75rem;
+      background-color: $primary;
+      border-color: $primary;
+      color: white;
+      border: 0;
+    }
+  
+    h3 {
+      color: white;
+      font-size: 13px;
+      font-weight: 500;
+    }
+  
+    p {
+      color: white;
+      font-size: 11px;
+    }
+  
+    #footer-list {
+      margin-top: auto;
+    }
+  
+    .mat-nav-list {
+      padding: 0;
+  
+    //   .mat-menu-trigger {
+    //     position: absolute;
+    //     top: 0;
+    //     right: 0;
+    //   }
+  
+      .mat-menu-item-highlighted {
+        background-color: darkred;
+      }
+  
+      .mat-list-avatar {
+        height: auto;
+        // width: 2.75rem;
+        // display: flex;
+        // align-content: center;
+      }
+  
+      .mat-list-item {
+        height: 2.75rem;
+        // display: flex;
+        // align-content: center;
+  
+        ::ng-deep .mat-list-item-content {
+          padding: 0;
+          width: 100%;
+
+          .mat-list-text {
+            padding-left: 4px;
+            padding-right: 8px;
+            order: 2;
+        }
+
+          .mat-icon {
+            width: 1.55rem;
+            height: 1.55rem;
+            padding-left: 0.6rem;
+            padding-right: 0.6rem;
+            color: white;
+            vertical-align:bottom !important;
+          }
+        }
+      }
+    }
+  }
+  
+//   .customize+* .mat-menu-panel {
+//     border-radius: 0 !important;
+  
+//     .mat-menu-content {
+//       background-color: #A80517;
+//       padding: 0 !important;
+  
+//       .mat-menu-item-highlighted {
+//         background-color: darkred;
+//       }
+  
+//       .mat-menu-item {
+//         height: 2.75rem;
+  
+//         .menu-icon {
+//           width: 1.9rem;
+//           height: 1.9rem;
+//         }
+  
+//         .mat-icon {
+//           color: white;
+//           margin: 0;
+//           padding-right: 0.5rem;
+//         }
+  
+//         .description {
+//           color: white;
+//           font-size: 13px;
+//         }
+//       }
+//     }
+//    }

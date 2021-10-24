@@ -1,0 +1,46 @@
+<div id="search-container">
+    <div id="search-fields">
+        <p>
+            <mat-form-field id="place-name" appearance="outline">
+              <mat-label>Outline form field</mat-label>
+              <input 
+                matInput 
+                formControlName="placeName"
+                placeholder="Placeholder">
+              <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
+            </mat-form-field>
+          </p>
+          <p>
+            <mat-form-field id="place-category" appearance="outline">
+                <mat-label>Select me</mat-label>
+                <mat-select
+                    matInput
+                    formControlName="placeCategory">
+                  <mat-option value="option">Option</mat-option>
+                </mat-select>
+            </mat-form-field>
+          </p>
+    </div>
+    <mat-grid-list cols="3" rowHeight="4:3">
+        <mat-grid-tile>
+            <mat-card>
+                1
+            </mat-card>
+        </mat-grid-tile>
+        <mat-grid-tile>
+            <mat-card>
+                2
+            </mat-card>        
+        </mat-grid-tile>
+        <mat-grid-tile>
+            <mat-card>
+                3
+            </mat-card>
+        </mat-grid-tile>
+        <mat-grid-tile>
+            <mat-card>
+                4
+            </mat-card>
+        </mat-grid-tile>
+    </mat-grid-list>
+</div>
