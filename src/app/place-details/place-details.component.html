@@ -1,0 +1,149 @@
+<div *ngIf="isSpinnerDisplayed" class="spinner-wrapper">
+    <mat-spinner></mat-spinner>
+</div>
+<div id="place-details-container">
+    <div id="modal-top">
+        <button id="close" mat-icon-button (click)="closeDialog()">
+            <mat-icon class="material-icons">close</mat-icon>
+        </button>
+    </div>
+    <div id="content">
+        <mat-grid-list [cols]="columnNumber" [rowHeight]="ratio" (window:resize)="onResize($event)">
+            <mat-grid-tile>
+                <mat-card class="mat-elevation-z2">
+                    <mat-card-header>
+                        <mat-card-title>Cybermachina</mat-card-title>
+                        <mat-card-subtitle>Bar</mat-card-subtitle>
+                      </mat-card-header>
+                      <img mat-card-image src="https://media-cdn.tripadvisor.com/media/photo-s/0d/0b/25/33/getlstd-property-photo.jpg" alt="Photo of a Shiba Inu">
+                      <mat-card-content>
+                        <p>
+                          The Shiba Inu is the smallest of the six original and distinct spitz breeds of dog from Japan.
+                          A small, agile dog that copes very well with mountainous terrain, the Shiba Inu was originally
+                          bred for hunting.
+                        </p>
+                      </mat-card-content>
+                      <mat-card-actions>
+                        <mat-progress-bar mode="determinate" value="0"></mat-progress-bar>
+                        <p>0%</p>
+                        <mat-icon mat-list-avatar *ngIf="isFavorite" (click)="toggleFavorite()">
+                            favorite
+                        </mat-icon>
+                        <mat-icon mat-list-avatar *ngIf="!isFavorite" (click)="toggleFavorite()">
+                            favorite_border
+                        </mat-icon>
+                    </mat-card-actions>
+                </mat-card>
+            </mat-grid-tile>
+            <mat-grid-tile>
+                <mat-card class="mat-elevation-z2">
+                    <mat-card-header>
+                        <mat-card-title class="warn">Zamknięte</mat-card-title>
+                      </mat-card-header>
+                      <mat-card-content>
+                          <div id="opening-hours">
+                            <p class="hours-title">
+                                Godziny:
+                              </p>
+                              <div class="day-of-week">
+                                  <p>poniedziałek:</p>
+                                  <p>16:00 - 01:00</p>
+                              </div>
+                              <div class="day-of-week">
+                                  <p>wtorek:</p>
+                                  <p>16:00 - 01:00</p>
+                              </div>
+                              <div class="day-of-week">
+                                  <p>środa:</p>
+                                  <p>16:00 - 01:00</p>
+                              </div>
+                              <div class="day-of-week">
+                                  <p>czwartek:</p>
+                                  <p>16:00 - 02:00</p>
+                              </div>
+                              <div class="day-of-week">
+                                  <p>piątek:</p>
+                                  <p>16:00 - 03:00</p>
+                              </div>
+                              <div class="day-of-week">
+                                  <p>sobota:</p>
+                                  <p>16:00 - 03:00</p>
+                              </div>
+                              <div class="day-of-week">
+                                  <p>niedziela:</p>
+                                  <p>16:00 - 01:00</p>
+                              </div>
+                          </div>
+                       
+                      </mat-card-content>
+                      <mat-card-header>
+                        <mat-card-title class="warn trend" *ngIf="false">Prognozowany wzrost
+                            <mat-icon mat-list-avatar>
+                                trending_up
+                            </mat-icon>
+                        </mat-card-title>
+                        <mat-card-title class="positive trend" *ngIf="false">Prognozowany spadek
+                            <mat-icon mat-list-avatar>
+                                trending_down
+                            </mat-icon>
+                        </mat-card-title>
+                        <mat-card-title class="trend" *ngIf="true">Prognozowana stabilizacja
+                            <mat-icon mat-list-avatar>
+                                trending_flat
+                            </mat-icon>
+                        </mat-card-title>
+                      </mat-card-header>
+                        <div id="charts-section">
+                            <div id="datepicker-section">
+                                <mat-form-field appearance="outline">
+                                    <mat-label>Wybierz dzień</mat-label>
+                                    <input matInput [matDatepicker]="picker">
+                                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                                    <mat-datepicker #picker></mat-datepicker>
+                                  </mat-form-field>
+                            </div>
+                            <div id="chart-container">
+                                <ngx-charts-bar-vertical
+                                    [results]="single"
+                                    [schemeType]="schemeType"
+                                    [gradient]="gradient"
+                                    [xAxis]="showXAxis"
+                                    [yAxis]="showYAxis"
+                                    [showXAxisLabel]="showXAxisLabel"
+                                    [showYAxisLabel]="showYAxisLabel"
+                                    [xAxisLabel]="xAxisLabel"
+                                    [yAxisLabel]="yAxisLabel"
+                                    (select)="onSelect($event)">
+                                </ngx-charts-bar-vertical>
+                            </div>
+                        </div>
+                </mat-card>
+            </mat-grid-tile>
+            <!-- <mat-grid-tile>
+                <mat-card class="mat-elevation-z2">
+                    <mat-card-header>
+                        <mat-card-title>Pizzeria Bravo</mat-card-title>
+                        <mat-card-subtitle>Bar/Restauracja</mat-card-subtitle>
+                      </mat-card-header>
+                      <mat-card-content>
+                        <p>
+                          The Shiba Inu is the smallest of the six original and distinct spitz breeds of dog from Japan.
+                          A small, agile dog that copes very well with mountainous terrain, the Shiba Inu was originally
+                          bred for hunting.
+                        </p>
+                      </mat-card-content>
+                      <mat-card-actions>
+                        <mat-progress-bar mode="determinate" value="10"></mat-progress-bar>
+                        <p>10%</p>
+                        <mat-icon mat-list-avatar *ngIf="isFavorite" (click)="toggleFavorite()">
+                            favorite
+                        </mat-icon>
+                        <mat-icon mat-list-avatar *ngIf="!isFavorite" (click)="toggleFavorite()">
+                            favorite_border
+                        </mat-icon>
+                    </mat-card-actions>
+                </mat-card>
+            </mat-grid-tile> -->
+        </mat-grid-list>
+    </div>
+</div>

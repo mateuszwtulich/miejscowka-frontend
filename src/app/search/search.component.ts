@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
+import { PlaceDetailsComponent } from '../place-details/place-details.component';
 
 @Component({
   selector: 'app-search',
@@ -10,7 +12,8 @@ export class SearchComponent implements OnInit {
   isFavorite = false;
   columnNumber = 3;
   ratio='2:3';
-  constructor() { }
+  constructor(
+    protected dialog: MatDialog) { }
 
   ngOnInit(): void {
     this.setApropriateSize();
@@ -22,6 +25,13 @@ export class SearchComponent implements OnInit {
 
   onResize(event: any) {
     this.setApropriateSize();
+  }
+
+  openPlaceDetailsDialog() {
+    this.dialog.open(PlaceDetailsComponent, {
+      width: '130vw',
+      maxHeight: '100vh'
+    });
   }
 
   private setApropriateSize() {

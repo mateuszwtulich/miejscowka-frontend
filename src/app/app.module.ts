@@ -16,13 +16,20 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { PlaceDetailsComponent } from './place-details/place-details.component';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatNativeDateModule, MAT_DATE_LOCALE } from '@angular/material/core';
+import { NgxChartsModule } from '@swimlane/ngx-charts';
 
 @NgModule({
   declarations: [
     AppComponent,
     SidenavComponent,
     HomeComponent,
-    SearchComponent
+    SearchComponent,
+    PlaceDetailsComponent
   ],
   imports: [
     BrowserModule,
@@ -37,9 +44,14 @@ import { MatProgressBarModule } from '@angular/material/progress-bar';
     MatFormFieldModule,
     MatSelectModule,
     MatInputModule,
-    MatProgressBarModule
+    MatProgressBarModule,
+    MatDialogModule,
+    MatProgressSpinnerModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
+    NgxChartsModule
   ],
-  providers: [],
+  providers: [{ provide: MAT_DATE_LOCALE, useValue: 'pl-PL' }],
   bootstrap: [AppComponent],
   exports: [
     SidenavComponent,
@@ -54,7 +66,12 @@ import { MatProgressBarModule } from '@angular/material/progress-bar';
     MatFormFieldModule,
     MatSelectModule,
     MatInputModule,
-    MatProgressBarModule
+    MatProgressBarModule,
+    MatDialogModule,
+    MatProgressSpinnerModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
+    NgxChartsModule 
   ]
 })
 export class AppModule { }
