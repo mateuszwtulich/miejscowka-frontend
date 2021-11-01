@@ -5,8 +5,8 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatSort, Sort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { Subscription } from 'rxjs';
-import { PlaceEto } from '../model/PlaceEto';
-import { SortUtil } from '../utils/SortUtil';
+import { PlaceEto } from '../../model/PlaceEto';
+import { SortUtil } from '../../utils/SortUtil';
 
 @Component({
   selector: 'app-administrator',

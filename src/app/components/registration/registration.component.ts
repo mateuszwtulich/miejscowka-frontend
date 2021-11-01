@@ -3,7 +3,7 @@ import { AbstractControl, FormBuilder, FormControl, FormGroup, FormGroupDirectiv
 import { ErrorStateMatcher } from '@angular/material/core';
 import { MatFormField } from '@angular/material/form-field';
 import { Subscription } from 'rxjs';
-import Validation from '../utils/Validation';
+import Validation from '../../utils/Validation';
 
 @Component({
   selector: 'app-registration',

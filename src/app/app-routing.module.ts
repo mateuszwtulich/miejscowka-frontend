@@ -1,9 +1,9 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { AdministratorComponent } from './administrator/administrator.component';
-import { LoginComponent } from './login/login.component';
-import { RegistrationComponent } from './registration/registration.component';
-import { SearchComponent } from './search/search.component';
+import { AdministratorComponent } from './components/administrator/administrator.component';
+import { LoginComponent } from './components/login/login.component';
+import { RegistrationComponent } from './components/registration/registration.component';
+import { SearchComponent } from './components/search/search.component';
 
 const routes: Routes = [
   {
