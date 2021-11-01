@@ -1,16 +1,21 @@
 <div id="search-container">
     <div id="search-fields" class="mat-elevation-z1">
-        <p>
+      <mat-grid-list [cols]="columnNumber" rowHeight="5:1" (window:resize)="onResize($event)">
+        <mat-grid-tile>
             <mat-form-field id="place-name" appearance="outline">
               <mat-label>Nazwa obiektu</mat-label>
               <input 
                 matInput 
                 formControlName="placeName">
-              <mat-icon matSuffix>search</mat-icon>
             </mat-form-field>
-          </p>
-          <p>
-            <mat-form-field id="place-category" appearance="outline">
+          </mat-grid-tile>
+        <mat-grid-tile>
+            <button id="search-button" mat-raised-button color="primary">Wyszukaj
+              <mat-icon matSuffix>search</mat-icon>
+            </button>
+        </mat-grid-tile>
+        <mat-grid-tile>
+          <mat-form-field id="place-category" appearance="outline">
                 <mat-label>Kategoria obiektu</mat-label>
                 <mat-select
                     matInput
@@ -18,8 +23,9 @@
                   <mat-option value="option">Obiekty sportowe</mat-option>
                 </mat-select>
             </mat-form-field>
-          </p>
-    </div>
+          </mat-grid-tile>
+        </mat-grid-list>
+      </div>
     <mat-grid-list [cols]="columnNumber" [rowHeight]="ratio" (window:resize)="onResize($event)">
         <mat-grid-tile>
             <mat-card class="mat-elevation-z2">

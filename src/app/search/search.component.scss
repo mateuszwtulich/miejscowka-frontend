@@ -12,14 +12,26 @@
         top: 0;
         z-index: 1;
 
-        #place-name {
-            float: left;
-            width: 66%;
+        .mat-grid-list {
+            margin: 0;
 
-        }
-        #place-category {
-            float: right;
-            width: 33%;
+            ::ng-deep .mat-form-field-wrapper {
+                margin: 0;
+                padding: 0;
+            }
+
+            #place-name {
+                width: 98%;
+            }
+
+            #search-button {
+                width: 98%;
+                height: 4rem;
+            }
+
+            #place-category {
+                width: 98%;
+            }
         }
     }
 
