@@ -1,0 +1,33 @@
+
+<div id="login-container">
+    <div id="login">
+        <div *ngIf="isSpinnerDisplayed" class="spinner-wrapper">
+            <mat-spinner color="accent"></mat-spinner>
+        </div>
+        <form [formGroup]="loginForm" (ngSubmit)="authenticate()">
+                <h2 id="login-title"> Logowanie </h2>
+                <div id="mat-form-container">
+                    <mat-form-field appearance="outline" color="accent">
+                        <mat-label> Nazwa użytkownika </mat-label>
+                        <input matInput placeholder="" formControlName="username" type="text" name="username"
+                            required>
+                    </mat-form-field>
+                    <mat-form-field appearance="outline" color="accent">
+                        <mat-label> Hasło </mat-label>
+                        <input matInput [type]="hide ? 'password' : 'text'" formControlName="password"
+                            type="password" name="password" required>
+                        <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'"
+                            [attr.aria-pressed]="hide">
+                            <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+                        </button>
+                    </mat-form-field>
+                    <button mat-raised-button type="submit" id="login-button"
+                        [disabled]="f.username.invalid || f.password.invalid">
+                        Zaloguj się </button>
+                </div>
+                <h5 id="password-message">
+                    <a id="text" routerLink="/register"> Nie masz jescze konta? Zarejestruj się </a>
+                </h5>
+        </form>
+    </div>
+</div>

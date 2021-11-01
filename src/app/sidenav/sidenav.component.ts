@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { NavigationEnd, Router } from '@angular/router';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-sidenav',
@@ -10,12 +12,25 @@ export class SidenavComponent implements OnInit {
   /**
    * Shows additional information
    */
-  
-showFiller = false;
+  isHomePage = true;
+  isLogged = false;
+  showFiller = false;
+  subscription: Subscription = new Subscription();
 
-constructor() { }
+  constructor(
+    private router: Router,
+  ) { }
 
   ngOnInit(): void {
+    this.onNavigationChange();
+  }
+
+  private onNavigationChange(){
+    this.subscription.add(this.router.events.subscribe(event => {
+      if (event instanceof NavigationEnd) {
+       this.isHomePage = event?.url.startsWith("/home");
+      }
+    }));
   }
 
   /**
@@ -24,6 +39,14 @@ constructor() { }
   onToggle() {
     this.showFiller = !this.showFiller;
     this.dispatchGlobalResizeEvent();
+  }
+
+  navigate() {
+    if (this.isLogged) {
+
+    } else {
+      this.router.navigateByUrl("/login");
+    }
   }
 
   private dispatchGlobalResizeEvent() {

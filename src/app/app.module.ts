@@ -22,6 +22,9 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule, MAT_DATE_LOCALE } from '@angular/material/core';
 import { NgxChartsModule } from '@swimlane/ngx-charts';
+import { LoginComponent } from './login/login.component';
+import { ReactiveFormsModule } from '@angular/forms';
+import { RegistrationComponent } from './registration/registration.component';
 
 @NgModule({
   declarations: [
@@ -29,7 +32,9 @@ import { NgxChartsModule } from '@swimlane/ngx-charts';
     SidenavComponent,
     HomeComponent,
     SearchComponent,
-    PlaceDetailsComponent
+    PlaceDetailsComponent,
+    LoginComponent,
+    RegistrationComponent
   ],
   imports: [
     BrowserModule,
@@ -49,7 +54,8 @@ import { NgxChartsModule } from '@swimlane/ngx-charts';
     MatProgressSpinnerModule,
     MatDatepickerModule,
     MatNativeDateModule,
-    NgxChartsModule
+    NgxChartsModule,
+    ReactiveFormsModule
   ],
   providers: [{ provide: MAT_DATE_LOCALE, useValue: 'pl-PL' }],
   bootstrap: [AppComponent],
@@ -71,7 +77,8 @@ import { NgxChartsModule } from '@swimlane/ngx-charts';
     MatProgressSpinnerModule,
     MatDatepickerModule,
     MatNativeDateModule,
-    NgxChartsModule 
+    NgxChartsModule,
+    ReactiveFormsModule
   ]
 })
 export class AppModule { }

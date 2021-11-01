@@ -35,7 +35,7 @@
             }
 
             .trend {
-                margin-top: 5%;
+                margin-top: 2%;
                 display: flex;
                 flex-direction: row;
 
@@ -79,13 +79,23 @@
                 }
 
                 #chart-container {
-                    width: 100%;
-                    height: 100%;
+                    width: 90%;
+                    height: 90%;
+                    align-self: center;
+
+                    @media (max-width: 600px) {
+                        height: 100%;
+                        width: 100%;
+                    }
                 }
             }
     
             img {
                 height: 70%;
+
+                @media (max-width: 600px) {
+                    height: 60%;
+                }
             }
     
             .mat-card-actions {
@@ -111,5 +121,12 @@
                 }
             }
         }
+    }
+}
+
+::ng-deep .mat-dialog-container {
+    padding: 1%;
+    @media (max-width: 600px) {
+        padding: 0;
     }
 }

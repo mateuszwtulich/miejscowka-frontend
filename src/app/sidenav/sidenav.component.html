@@ -16,7 +16,7 @@
                  class="globe-logo"> -->
         </div>
         <mat-divider></mat-divider>
-        <a id="search" mat-list-item>
+        <a id="search" *ngIf="isHomePage" mat-list-item>
             <mat-icon mat-list-avatar>
                 search
             </mat-icon>
@@ -27,7 +27,7 @@
                 Szukaj po kategorii obiektu
             </p>
         </a>
-        <a id="trending_down" mat-list-item>
+        <a id="trending_down" *ngIf="isHomePage" mat-list-item>
             <mat-icon mat-list-avatar>
                 trending_down
             </mat-icon>
@@ -38,7 +38,7 @@
                 Filtruj po najmniej zatłoczonych
             </p>
         </a>
-        <a id="trending_up" mat-list-item>
+        <a id="trending_up" *ngIf="isHomePage" mat-list-item>
             <mat-icon mat-list-avatar>
                 trending_up
             </mat-icon>
@@ -49,7 +49,7 @@
                 Filtruj po najbardziej zatłoczonych
             </p>
         </a>
-        <a id="favorite" mat-list-item>
+        <a id="favorite" *ngIf="isHomePage" (click)="navigate()" mat-list-item>
             <mat-icon mat-list-avatar>
                 favorite
             </mat-icon>
@@ -60,19 +60,36 @@
                 Filtruj po ulubionych
             </p>
         </a>
+        <a id="home" *ngIf="!isHomePage" routerLink="/home" mat-list-item>
+            <mat-icon mat-list-avatar>
+                home
+            </mat-icon>
+            <h3 mat-line *ngIf="showFiller">
+                Strona główna
+            </h3>
+            <p mat-line *ngIf="showFiller">
+                Szukaj miejscówki
+            </p>
+        </a>
     </mat-nav-list>
 
     <mat-nav-list id="footer-list">
-        <a id="refresh" mat-list-item>
+        <a id="refresh" *ngIf="isHomePage" mat-list-item>
             <mat-icon mat-list-avatar>refresh</mat-icon>
             <h3 mat-line *ngIf="showFiller">
                 Odśwież dane
             </h3>
         </a>
-        <a id="exit" mat-list-item>
+        <a id="login" *ngIf="!isLogged" mat-list-item routerLink="/login">
             <mat-icon mat-list-avatar>login</mat-icon>
             <h3 mat-line *ngIf="showFiller">
                 Zaloguj się
+            </h3>
+        </a>
+        <a id="logout" *ngIf="isLogged" mat-list-item routerLink="/home">
+            <mat-icon mat-list-avatar>logout</mat-icon>
+            <h3 mat-line *ngIf="showFiller">
+                Wyloguj się
             </h3>
         </a>
     </mat-nav-list>

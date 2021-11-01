@@ -1,0 +1,62 @@
+<div id="registration-container">
+    <div id="registration">
+        <div *ngIf="isSpinnerDisplayed" class="spinner-wrapper">
+            <mat-spinner color="accent"></mat-spinner>
+        </div>
+        <form [formGroup]="registerForm" (ngSubmit)="register()">
+                <h2 id="registration-title"> Rejestracja </h2>
+                <div id="mat-form-container">
+                    <mat-form-field appearance="outline" color="accent">
+                    <mat-label> Imię </mat-label>
+                    <input matInput #input formControlName="name">
+                </mat-form-field>
+                <mat-form-field appearance="outline" color="accent">
+                    <mat-label> Nazwisko </mat-label>
+                    <input matInput #input formControlName="surname">
+                </mat-form-field>
+                <mat-form-field appearance="outline" color="accent">
+                    <mat-label> E-mail </mat-label>
+                    <input matInput placeholder="pat@example.com" formControlName="email"
+                        required>
+                    <mat-error *ngIf="f.email.invalid">{{getErrorMessage()}}</mat-error>
+                </mat-form-field>
+
+                    <mat-form-field appearance="outline" color="accent">
+                        <mat-label> Hasło </mat-label>
+                        <input matInput [type]="hide ? 'password' : 'text'" formControlName="password">
+                        <button mat-icon-button matSuffix (click)="hide = !hide"
+                            [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
+                            <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+                        </button>
+                        <mat-error *ngIf="f.password.hasError('required')">
+                            registration.enter-password
+                        </mat-error>
+                        <mat-error *ngIf="f.password.hasError('minlength')">
+                            registration.enter-password min
+                        </mat-error>
+                        <mat-error *ngIf="f.password.hasError('maxlength')">
+                            registration.enter-password max
+                        </mat-error>
+                    </mat-form-field>
+                    <mat-form-field appearance="outline" color="accent">
+                        <mat-label> Powtórz hasło </mat-label>
+                        <input matInput [type]="hide ? 'password' : 'text'"
+                            formControlName="confirmPassword">
+                        <mat-error *ngIf="f.confirmPassword.hasError('matching')">
+                            registration.password-not-match
+                        </mat-error>
+                        <button mat-icon-button matSuffix (click)="hide = !hide"
+                            [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
+                            <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+                        </button>
+                    </mat-form-field>
+                    <button mat-raised-button type="submit" color="accent" id="registration-button"
+                    [disabled]="f.name.invalid || f.surname.invalid || f.email.invalid || f.password.invalid || f.confirmPassword.invalid">
+                    Zarejestruj się </button>
+                </div>
+                <h5 id="login-message">
+                    <a id="text" routerLink="/login"> Posiadasz już konto? Zaloguj się </a>
+                </h5>
+        </form>
+    </div>
+</div>

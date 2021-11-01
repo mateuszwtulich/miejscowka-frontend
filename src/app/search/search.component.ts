@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { PlaceDetailsComponent } from '../place-details/place-details.component';
 
@@ -9,11 +10,18 @@ import { PlaceDetailsComponent } from '../place-details/place-details.component'
 })
 export class SearchComponent implements OnInit {
 
+  searchForm: FormGroup;
   isFavorite = false;
   columnNumber = 3;
   ratio='2:3';
   constructor(
-    protected dialog: MatDialog) { }
+    private _formBuilder: FormBuilder,
+    protected dialog: MatDialog) {
+      this.searchForm = this._formBuilder.group({
+        placeName: [''],
+        placeCategory: ['']
+      });
+     }
 
   ngOnInit(): void {
     this.setApropriateSize();
@@ -29,8 +37,10 @@ export class SearchComponent implements OnInit {
 
   openPlaceDetailsDialog() {
     this.dialog.open(PlaceDetailsComponent, {
-      width: '130vw',
-      maxHeight: '100vh'
+      width: '100vw',
+      maxWidth: '100vw',
+      maxHeight: '100vh',
+      height: 'fit-content'
     });
   }
 

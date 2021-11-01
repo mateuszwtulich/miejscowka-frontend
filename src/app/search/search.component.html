@@ -1,5 +1,5 @@
 <div id="search-container">
-    <div id="search-fields" class="mat-elevation-z1">
+    <div [formGroup]="searchForm" id="search-fields" class="mat-elevation-z1">
         <p>
             <mat-form-field id="place-name" appearance="outline">
               <mat-label>Nazwa obiektu</mat-label>
@@ -48,13 +48,13 @@
             </mat-card>
         </mat-grid-tile>
         <mat-grid-tile>
-            <mat-card class="mat-elevation-z2" (click)="openPlaceDetailsDialog()">
-                <mat-card-header>
+            <mat-card class="mat-elevation-z2">
+                <mat-card-header (click)="openPlaceDetailsDialog()">
                     <mat-card-title>Cybermachina</mat-card-title>
                     <mat-card-subtitle>Bar</mat-card-subtitle>
                   </mat-card-header>
-                  <img mat-card-image src="https://media-cdn.tripadvisor.com/media/photo-s/0d/0b/25/33/getlstd-property-photo.jpg" alt="Photo of a Shiba Inu">
-                  <mat-card-content>
+                  <img (click)="openPlaceDetailsDialog()" mat-card-image src="https://media-cdn.tripadvisor.com/media/photo-s/0d/0b/25/33/getlstd-property-photo.jpg" alt="Photo of a Shiba Inu">
+                  <mat-card-content (click)="openPlaceDetailsDialog()">
                     <p>
                       The Shiba Inu is the smallest of the six original and distinct spitz breeds of dog from Japan.
                       A small, agile dog that copes very well with mountainous terrain, the Shiba Inu was originally
@@ -79,7 +79,7 @@
                     <mat-card-title>Pizzeria Bravo</mat-card-title>
                     <mat-card-subtitle>Bar/Restauracja</mat-card-subtitle>
                   </mat-card-header>
-                  <img mat-card-image src="https://lh3.googleusercontent.com/proxy/lpSO6OteepmUePSMwODwJWKMAEgyefdVcWoqbNd0EGjJyQYAJoHVGNz_dnsh0Dj8OKnimnvRX2bGNLZy_eSgfCi5VIjdrkOVDAwQAxlQHgNpFBkroNGeja6BPjs" alt="Photo of a Shiba Inu">
+                  <img mat-card-image src="https://media-cdn.tripadvisor.com/media/photo-s/0d/0b/25/33/getlstd-property-photo.jpg" alt="Photo of a Shiba Inu">
                   <mat-card-content>
                     <p>
                       The Shiba Inu is the smallest of the six original and distinct spitz breeds of dog from Japan.
@@ -105,7 +105,7 @@
                     <mat-card-title>Fuga Mundi</mat-card-title>
                     <mat-card-subtitle>Bar/Bilard</mat-card-subtitle>
                   </mat-card-header>
-                  <img mat-card-image src="https://lh3.googleusercontent.com/proxy/_CSmDXcg-h9gpeNnsQ3OiUUczRc8vtiGqRcDUvZFoTvNpZb3O60n5nxGSZo6Cu9gkYKxFi_DHnLARdNksUZBGfA" alt="Photo of a Shiba Inu">
+                  <img mat-card-image src="https://media-cdn.tripadvisor.com/media/photo-s/0d/0b/25/33/getlstd-property-photo.jpg" alt="Photo of a Shiba Inu">
                   <mat-card-content>
                     <p>
                       The Shiba Inu is the smallest of the six original and distinct spitz breeds of dog from Japan.

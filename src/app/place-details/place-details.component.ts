@@ -49,6 +49,7 @@ export class PlaceDetailsComponent implements OnInit {
 
   private setApropriateSize() {
     this.columnNumber = (window.innerWidth <= 1400) ? 1 : 2;
+    this.ratio = (window.innerWidth <= 500) ? '2:3' : '6:7';
   }
 
   toggleFavorite() {
