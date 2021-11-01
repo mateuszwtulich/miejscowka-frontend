@@ -1,0 +1,52 @@
+#administrator-container {
+    display: flex;
+    flex-direction: column;
+
+    #search-fields {
+        height: fit-content;
+        padding-left: 1.5%;
+        padding-right: 1.5%;
+        position: -webkit-sticky; /* Safari */
+        position: sticky;
+        background-color: white;
+        top: 0;
+        z-index: 1;
+
+        #place-name {
+            float: left;
+            width: 66%;
+
+        }
+        #place-category {
+            float: right;
+            width: 33%;
+        }
+    }
+}
+
+#places-table{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 3%;
+
+    .spinner-wrapper {
+      position: absolute !important;
+      width: 100% !important;
+      height: 90% !important;
+      background-color: rgba(0, 0, 0, 0.1);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    #table-wrapper {
+        margin-top: 2%;
+        width: 97%;
+
+        table{
+            width: 100%;
+        }
+    }
+}

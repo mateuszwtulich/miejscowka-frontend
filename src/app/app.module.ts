@@ -25,6 +25,8 @@ import { NgxChartsModule } from '@swimlane/ngx-charts';
 import { LoginComponent } from './login/login.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { RegistrationComponent } from './registration/registration.component';
+import { AdministratorComponent } from './administrator/administrator.component';
+import { MatTableModule } from '@angular/material/table';
 
 @NgModule({
   declarations: [
@@ -34,7 +36,8 @@ import { RegistrationComponent } from './registration/registration.component';
     SearchComponent,
     PlaceDetailsComponent,
     LoginComponent,
-    RegistrationComponent
+    RegistrationComponent,
+    AdministratorComponent
   ],
   imports: [
     BrowserModule,
@@ -55,7 +58,8 @@ import { RegistrationComponent } from './registration/registration.component';
     MatDatepickerModule,
     MatNativeDateModule,
     NgxChartsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    MatTableModule
   ],
   providers: [{ provide: MAT_DATE_LOCALE, useValue: 'pl-PL' }],
   bootstrap: [AppComponent],
@@ -78,7 +82,8 @@ import { RegistrationComponent } from './registration/registration.component';
     MatDatepickerModule,
     MatNativeDateModule,
     NgxChartsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    MatTableModule
   ]
 })
 export class AppModule { }

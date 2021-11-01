@@ -71,6 +71,17 @@
                 Szukaj miejscówki
             </p>
         </a>
+        <a id="add" *ngIf="isAdminPage" mat-list-item>
+            <mat-icon mat-list-avatar>
+                add_circle_outline
+            </mat-icon>
+            <h3 mat-line *ngIf="showFiller">
+                Utwórz
+            </h3>
+            <p mat-line *ngIf="showFiller">
+                Utwórz nową miejscówkę
+            </p>
+        </a>
     </mat-nav-list>
 
     <mat-nav-list id="footer-list">

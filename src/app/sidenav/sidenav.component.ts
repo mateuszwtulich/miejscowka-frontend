@@ -13,6 +13,7 @@ export class SidenavComponent implements OnInit {
    * Shows additional information
    */
   isHomePage = true;
+  isAdminPage = false;
   isLogged = false;
   showFiller = false;
   subscription: Subscription = new Subscription();
@@ -29,6 +30,7 @@ export class SidenavComponent implements OnInit {
     this.subscription.add(this.router.events.subscribe(event => {
       if (event instanceof NavigationEnd) {
        this.isHomePage = event?.url.startsWith("/home");
+       this.isAdminPage = event?.url.startsWith("/administrator");
       }
     }));
   }
