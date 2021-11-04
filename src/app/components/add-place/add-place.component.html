@@ -1,0 +1,72 @@
+<div id="dialog">
+    <div *ngIf="isSpinnerDisplayed" class="spinner-wrapper">
+        <mat-spinner color="accent"></mat-spinner>
+    </div>
+    <div id="modal-top">
+        <h2 class="mat-h2"> Edytuj miejscówkę </h2>
+        <button id="close" mat-icon-button (click)="closeDialog()">
+            <mat-icon class="material-icons">close</mat-icon>
+        </button>
+    </div>
+
+    <div id="content">
+        <form [formGroup]="placeForm" (ngSubmit)="addPlace()">
+            <mat-form-field class="full-width-input" appearance="outline" color="accent">
+                <mat-label> Nazwa </mat-label>
+                    <input matInput formControlName="name" name="name" required>
+            </mat-form-field>
+            <mat-form-field class="full-width-input" appearance="outline" color="accent">
+                <mat-label> Opis </mat-label>
+                    <input matInput formControlName="description" name="description">          
+            </mat-form-field>
+
+            <mat-form-field class="full-width-input" appearance="outline" color="accent">
+                <mat-label> Kategoria </mat-label>
+                <mat-select formControlName="category">
+                    <mat-option *ngFor="let category of categories" [value]="category">{{category.name}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+            <mat-form-field class="full-width-input" appearance="outline" color="accent">
+                <mat-label> Pojemność </mat-label>
+                <input matInput formControlName="capacity" required>
+              </mat-form-field>
+
+
+            <table class="example-full-width" cellspacing="0"><tr>
+
+                <td><mat-form-field class="full-width-input" appearance="outline" color="accent">
+                <mat-label> Ulica </mat-label>
+                <input matInput formControlName="street" required>
+              </mat-form-field></td>
+              <td><mat-form-field class="full-width-input" appearance="outline" color="accent">
+                <mat-label> Numer budynku </mat-label>
+                <input matInput formControlName="buildingNumber" required>
+              </mat-form-field></td>
+              <td><mat-form-field class="full-width-input" appearance="outline" color="accent">
+                <mat-label> Numer mieszkania </mat-label>
+                <input matInput formControlName="apartmentNumber">
+              </mat-form-field></td>
+
+            </tr></table>
+
+            <table class="example-full-width" cellspacing="0"><tr>
+                <td>
+                <mat-label> Poniedziałek od </mat-label>
+                <app-duration-editor-search-form formControlName="mondayFrom"
+                    id="min-deviation">
+                </app-duration-editor-search-form>
+            </td>
+            <td>
+                <mat-label> Poniedziałek do </mat-label>
+                <app-duration-editor-search-form formControlName="mondayTo"
+                id="min-deviation">
+            </app-duration-editor-search-form></td>
+            </tr></table>
+
+            <div class="button-wrapper">
+                <button id="add" mat-flat-button type="submit" color="accent"> Dodaj </button>
+            </div>
+        </form>
+    </div>
+</div>

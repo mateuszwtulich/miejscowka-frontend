@@ -1,0 +1,19 @@
+<div class="duration-editor">
+    <input type="number"
+           matInput
+           min="0"
+           class="hours"
+           [(ngModel)]="model.hours"
+           (change)="validate()"
+           [disabled]="disabled">
+    <span>Godzina</span>
+    &nbsp;
+    <input type="number"
+           matInput
+           min="0"
+           class="minutes"
+           [(ngModel)]="model.minutes"
+           (change)="validate()"
+           [disabled]="disabled">
+    <span>Minuta</span>
+  </div>

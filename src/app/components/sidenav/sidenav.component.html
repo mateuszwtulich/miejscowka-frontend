@@ -16,7 +16,7 @@
                  class="globe-logo"> -->
         </div>
         <mat-divider></mat-divider>
-        <a id="search" *ngIf="isHomePage" mat-list-item>
+        <!-- <a id="search" *ngIf="isHomePage" mat-list-item>
             <mat-icon mat-list-avatar>
                 search
             </mat-icon>
@@ -26,7 +26,7 @@
             <p mat-line *ngIf="showFiller">
                 Szukaj po kategorii obiektu
             </p>
-        </a>
+        </a> -->
         <a id="trending_down" *ngIf="isHomePage" mat-list-item>
             <mat-icon mat-list-avatar>
                 trending_down
@@ -58,6 +58,17 @@
             </h3>
             <p mat-line *ngIf="showFiller">
                 Filtruj po ulubionych
+            </p>
+        </a>
+        <a id="favorite" *ngIf="isHomePage" (click)="navigateToAdminPage()" mat-list-item>
+            <mat-icon mat-list-avatar>
+                admin_panel_settings
+            </mat-icon>
+            <h3 mat-line *ngIf="showFiller">
+                Panel administratora
+            </h3>
+            <p mat-line *ngIf="showFiller">
+                Dodawaj, usuwaj i modyfikuj miejscówki
             </p>
         </a>
         <a id="home" *ngIf="!isHomePage" routerLink="/home" mat-list-item>

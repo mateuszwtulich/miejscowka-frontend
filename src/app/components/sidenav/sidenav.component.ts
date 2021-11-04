@@ -51,6 +51,10 @@ export class SidenavComponent implements OnInit {
     }
   }
 
+  navigateToAdminPage() {
+      this.router.navigateByUrl("/administrator");
+  }
+
   private dispatchGlobalResizeEvent() {
     setTimeout(() =>
         window.dispatchEvent(new Event('resize')),

@@ -23,10 +23,15 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule, MAT_DATE_LOCALE } from '@angular/material/core';
 import { NgxChartsModule } from '@swimlane/ngx-charts';
 import { LoginComponent } from './components/login/login.component';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RegistrationComponent } from './components/registration/registration.component';
 import { AdministratorComponent } from './components/administrator/administrator.component';
 import { MatTableModule } from '@angular/material/table';
+import { AddPlaceComponent } from './components/add-place/add-place.component';
+import { ModifyPlaceComponent } from './modify-place/modify-place.component';
+import { DeletePlaceComponent } from './delete-place/delete-place.component';
+import { DurationEditorSearchFromComponent } from './components/duration-editor-search-from/duration-editor-search-from.component';
+import { DurationEditorComponent } from './components/duration-editor/duration-editor.component';
 
 @NgModule({
   declarations: [
@@ -37,7 +42,12 @@ import { MatTableModule } from '@angular/material/table';
     PlaceDetailsComponent,
     LoginComponent,
     RegistrationComponent,
-    AdministratorComponent
+    AdministratorComponent,
+    AddPlaceComponent,
+    ModifyPlaceComponent,
+    DeletePlaceComponent,
+    DurationEditorSearchFromComponent,
+    DurationEditorComponent
   ],
   imports: [
     BrowserModule,
@@ -59,7 +69,8 @@ import { MatTableModule } from '@angular/material/table';
     MatNativeDateModule,
     NgxChartsModule,
     ReactiveFormsModule,
-    MatTableModule
+    MatTableModule,
+    FormsModule 
   ],
   providers: [{ provide: MAT_DATE_LOCALE, useValue: 'pl-PL' }],
   bootstrap: [AppComponent],
@@ -83,7 +94,8 @@ import { MatTableModule } from '@angular/material/table';
     MatNativeDateModule,
     NgxChartsModule,
     ReactiveFormsModule,
-    MatTableModule
+    MatTableModule,
+    FormsModule 
   ]
 })
 export class AppModule { }
