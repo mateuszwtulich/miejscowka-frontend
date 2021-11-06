@@ -1,0 +1,16 @@
+Precondition : Install docker from https://hub.docker.com for windows 10. For another win OS install also docker toolbox.
+
+Setup docker containers :
+1.Build frontend docker image: run in cmd "docker build -t miejscowka-frontend ." inside frontend dir.
+2.Build backend docker image: run in cmd "docker build -t miejscowka-backend ." inside backend dir.
+3.Start compose containers from file "docker-compose.yml" (defaulty in backend dir) with command "docker-compose up"
+
+Now backend is running on localhost:8090 
+frontend localhost:4200 
+postgres localhost:5050
+(ports are mapped from docker network in compose file)
+
+To turn off compose run (docker-compose down)
+Then to delete docker image (docker rmi name_of_image)
+To run individual container from image (docker run -p 4200:80 miejscowka_frontend)
+To show all created images (docker images)
