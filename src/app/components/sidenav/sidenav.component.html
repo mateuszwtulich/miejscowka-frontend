@@ -82,7 +82,7 @@
                 Szukaj miejscówki
             </p>
         </a>
-        <a id="add" *ngIf="isAdminPage" mat-list-item>
+        <a id="add" *ngIf="isAdminPage" (click)="addNewPlace()" mat-list-item>
             <mat-icon mat-list-avatar>
                 add_circle_outline
             </mat-icon>

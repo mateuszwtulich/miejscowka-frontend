@@ -6,6 +6,7 @@ import { MatSort, Sort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { Subscription } from 'rxjs';
 import { DeletePlaceComponent } from 'src/app/delete-place/delete-place.component';
+import { AdministratorService } from 'src/app/services/administrator.service';
 import { PlaceEto } from '../../model/PlaceEto';
 import { SortUtil } from '../../utils/SortUtil';
 import { AddPlaceComponent } from '../add-place/add-place.component';
@@ -27,7 +28,7 @@ export class AdministratorComponent implements OnInit {
 
   constructor(
     // private serviceService: ServiceService,
-    public dialog: MatDialog,
+    private administratorService: AdministratorService,
     private _formBuilder: FormBuilder,
   ) { 
     this.searchForm = this._formBuilder.group({
@@ -106,22 +107,16 @@ export class AdministratorComponent implements OnInit {
   }
 
   addPlace() {
-    const dialogRef = this.dialog.open(AddPlaceComponent, { minHeight: '75%', minWidth: '45%' });
+    this.administratorService.addPlace();
   }
 
   modifyPlace(place: PlaceEto) {
-    const dialogRef = this.dialog.open(AddPlaceComponent, { minHeight: '75%', minWidth: '45%' });
+    this.administratorService.modifyPlace(place);
     // const dialogRef = this.dialog.open(ModifyServiceComponent, { data: service, height: '55%', width: '45%' });
   }
 
   deletePlace(place: PlaceEto) {
-    const dialogRef = this.dialog.open(DeletePlaceComponent, { minHeight: '20%', minWidth: '35%' });
-
-    dialogRef.afterClosed().subscribe((isDecisionPositive: boolean) => {
-      if (isDecisionPositive) {
-        // this.serviceService.deleteService(service.id);
-      }
-    });
+    this.administratorService.deletePlace(place);
   }
 
   ngOnDestroy() {

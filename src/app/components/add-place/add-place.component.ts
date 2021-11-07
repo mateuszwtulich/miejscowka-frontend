@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ModuleWithComponentFactories, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef } from '@angular/material/dialog';
+import * as moment from 'moment';
 import { Subscription } from 'rxjs';
 
 @Component({
@@ -10,6 +11,7 @@ import { Subscription } from 'rxjs';
 })
 export class AddPlaceComponent implements OnInit {
 
+  mondayFrom: moment.Moment | undefined;
   placeForm: FormGroup;
   public subscription = new Subscription();
   public isSpinnerDisplayed: boolean = false;
@@ -26,8 +28,20 @@ export class AddPlaceComponent implements OnInit {
         street: ['', Validators.required],
         buildingNumber: ['', Validators.required],
         apartmentNumber: ['', Validators.required],
-        mondayFrom: [[], Validators.required],
-        mondayTo: [[], Validators.required],
+        mondayFrom: [new Date(), Validators.required],
+        mondayTo: [new Date(), Validators.required],
+        tuesdayFrom: [new Date(), Validators.required],
+        tuesdayTo: [new Date(), Validators.required],
+        wednesdayFrom: [new Date(), Validators.required],
+        wednesdayTo: [new Date(), Validators.required],
+        thursdayFrom: [new Date(), Validators.required],
+        thursdayTo: [new Date(), Validators.required],
+        fridayFrom: [new Date(), Validators.required],
+        fridayTo: [new Date(), Validators.required],
+        saturdayFrom: [new Date(), Validators.required],
+        saturdayTo: [new Date(), Validators.required],
+        sundayFrom: [new Date(), Validators.required],
+        sundayTo: [new Date(), Validators.required],
       });
      }
   ngOnInit(): void {

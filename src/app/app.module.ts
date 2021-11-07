@@ -30,8 +30,7 @@ import { MatTableModule } from '@angular/material/table';
 import { AddPlaceComponent } from './components/add-place/add-place.component';
 import { ModifyPlaceComponent } from './modify-place/modify-place.component';
 import { DeletePlaceComponent } from './delete-place/delete-place.component';
-import { DurationEditorSearchFromComponent } from './components/duration-editor-search-from/duration-editor-search-from.component';
-import { DurationEditorComponent } from './components/duration-editor/duration-editor.component';
+import { NgxMatDatetimePickerModule, NgxMatNativeDateModule, NgxMatTimepickerModule } from '@angular-material-components/datetime-picker';
 
 @NgModule({
   declarations: [
@@ -46,8 +45,6 @@ import { DurationEditorComponent } from './components/duration-editor/duration-e
     AddPlaceComponent,
     ModifyPlaceComponent,
     DeletePlaceComponent,
-    DurationEditorSearchFromComponent,
-    DurationEditorComponent
   ],
   imports: [
     BrowserModule,
@@ -70,7 +67,10 @@ import { DurationEditorComponent } from './components/duration-editor/duration-e
     NgxChartsModule,
     ReactiveFormsModule,
     MatTableModule,
-    FormsModule 
+    FormsModule,
+    NgxMatTimepickerModule,
+    NgxMatDatetimePickerModule,
+    NgxMatNativeDateModule
   ],
   providers: [{ provide: MAT_DATE_LOCALE, useValue: 'pl-PL' }],
   bootstrap: [AppComponent],
@@ -95,7 +95,10 @@ import { DurationEditorComponent } from './components/duration-editor/duration-e
     NgxChartsModule,
     ReactiveFormsModule,
     MatTableModule,
-    FormsModule 
+    FormsModule,
+    NgxMatTimepickerModule,
+    NgxMatDatetimePickerModule,
+    NgxMatNativeDateModule
   ]
 })
 export class AppModule { }

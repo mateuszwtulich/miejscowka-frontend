@@ -48,8 +48,30 @@
           }
         }
 
+        .address-table {
+          width: 100%;
+          ::ng-deep .mat-form-field-wrapper {
+            padding-bottom: 0;
+          }
+        }
+
         .example-full-width {
             width: 100%;
+          
+            .day-of-week {
+              display: flex;
+              flex-direction: row;
+              justify-content: space-between;
+
+              .one-line {
+                display: flex;
+                flex-direction: row;
+                height: 60px;
+
+                .day-label {
+                  margin-top: 23px;
+               }
+            }
           }
           
           td {
@@ -57,7 +79,9 @@
           }     
       }
   }
+}
 
   ::ng-deep .mat-dialog-container {
     height: fit-content;
+    overflow-y: auto;
 }

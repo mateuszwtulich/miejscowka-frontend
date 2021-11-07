@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
+import { AdministratorService } from 'src/app/services/administrator.service';
 
 @Component({
   selector: 'app-sidenav',
@@ -20,6 +21,7 @@ export class SidenavComponent implements OnInit {
 
   constructor(
     private router: Router,
+    private administratorService: AdministratorService,
   ) { }
 
   ngOnInit(): void {
@@ -59,5 +61,9 @@ export class SidenavComponent implements OnInit {
     setTimeout(() =>
         window.dispatchEvent(new Event('resize')),
       700);
+  }
+
+  addNewPlace() {
+    this.administratorService.addPlace();
   }
 }
