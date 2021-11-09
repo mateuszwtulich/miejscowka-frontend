@@ -28,8 +28,8 @@ import { RegistrationComponent } from './components/registration/registration.co
 import { AdministratorComponent } from './components/administrator/administrator.component';
 import { MatTableModule } from '@angular/material/table';
 import { AddPlaceComponent } from './components/add-place/add-place.component';
-import { ModifyPlaceComponent } from './modify-place/modify-place.component';
-import { DeletePlaceComponent } from './delete-place/delete-place.component';
+import { ModifyPlaceComponent } from './components/modify-place/modify-place.component';
+import { DeletePlaceComponent } from './components/delete-place/delete-place.component';
 import { NgxMatDatetimePickerModule, NgxMatNativeDateModule, NgxMatTimepickerModule } from '@angular-material-components/datetime-picker';
 
 @NgModule({

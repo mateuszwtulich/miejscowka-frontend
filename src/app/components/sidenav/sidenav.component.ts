@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
-import { AdministratorService } from 'src/app/services/administrator.service';
+import { SidenavService } from 'src/app/services/sidenav.service';
+import { AdministratorService } from '../../services/administrator.service';
 
 @Component({
   selector: 'app-sidenav',
@@ -22,6 +23,7 @@ export class SidenavComponent implements OnInit {
   constructor(
     private router: Router,
     private administratorService: AdministratorService,
+    private sidenavService: SidenavService
   ) { }
 
   ngOnInit(): void {
@@ -37,6 +39,18 @@ export class SidenavComponent implements OnInit {
     }));
   }
 
+  sortPlacesDesc() {
+    this.sidenavService.sortBy$.next(true);
+  }
+
+  sortPlacesAsc() {
+    this.sidenavService.sortBy$.next(false);
+  }
+
+  refresh() {
+    this.sidenavService.refresh$.next();
+  }
+  
   /**
    * Handles toggling of side menu
    */

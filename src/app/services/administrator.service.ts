@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { AddPlaceComponent } from '../components/add-place/add-place.component';
-import { DeletePlaceComponent } from '../delete-place/delete-place.component';
+import { DeletePlaceComponent } from '../components/delete-place/delete-place.component';
 import { PlaceEto } from '../model/PlaceEto';
 
 @Injectable({

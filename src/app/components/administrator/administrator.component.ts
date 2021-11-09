@@ -1,15 +1,11 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
-import { MatDialog } from '@angular/material/dialog';
-import { MatPaginator } from '@angular/material/paginator';
 import { MatSort, Sort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { Subscription } from 'rxjs';
-import { DeletePlaceComponent } from 'src/app/delete-place/delete-place.component';
 import { AdministratorService } from 'src/app/services/administrator.service';
 import { PlaceEto } from '../../model/PlaceEto';
 import { SortUtil } from '../../utils/SortUtil';
-import { AddPlaceComponent } from '../add-place/add-place.component';
 
 @Component({
   selector: 'app-administrator',

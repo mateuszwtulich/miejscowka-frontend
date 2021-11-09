@@ -27,7 +27,7 @@
                 Szukaj po kategorii obiektu
             </p>
         </a> -->
-        <a id="trending_down" *ngIf="isHomePage" mat-list-item>
+        <a id="trending_down" *ngIf="isHomePage" (click)="sortPlacesDesc()" mat-list-item>
             <mat-icon mat-list-avatar>
                 trending_down
             </mat-icon>
@@ -38,7 +38,7 @@
                 Filtruj po najmniej zatłoczonych
             </p>
         </a>
-        <a id="trending_up" *ngIf="isHomePage" mat-list-item>
+        <a id="trending_up" *ngIf="isHomePage" (click)="sortPlacesAsc()" mat-list-item>
             <mat-icon mat-list-avatar>
                 trending_up
             </mat-icon>
@@ -96,7 +96,7 @@
     </mat-nav-list>
 
     <mat-nav-list id="footer-list">
-        <a id="refresh" *ngIf="isHomePage" mat-list-item>
+        <a id="refresh" *ngIf="isHomePage" (click)="refresh()" mat-list-item>
             <mat-icon mat-list-avatar>refresh</mat-icon>
             <h3 mat-line *ngIf="showFiller">
                 Odśwież dane
