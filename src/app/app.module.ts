@@ -31,6 +31,7 @@ import { AddPlaceComponent } from './components/add-place/add-place.component';
 import { ModifyPlaceComponent } from './components/modify-place/modify-place.component';
 import { DeletePlaceComponent } from './components/delete-place/delete-place.component';
 import { NgxMatDatetimePickerModule, NgxMatNativeDateModule, NgxMatTimepickerModule } from '@angular-material-components/datetime-picker';
+import { MatPaginatorModule } from '@angular/material/paginator';
 
 @NgModule({
   declarations: [
@@ -70,7 +71,8 @@ import { NgxMatDatetimePickerModule, NgxMatNativeDateModule, NgxMatTimepickerMod
     FormsModule,
     NgxMatTimepickerModule,
     NgxMatDatetimePickerModule,
-    NgxMatNativeDateModule
+    NgxMatNativeDateModule,
+    MatPaginatorModule
   ],
   providers: [{ provide: MAT_DATE_LOCALE, useValue: 'pl-PL' }],
   bootstrap: [AppComponent],
@@ -98,7 +100,8 @@ import { NgxMatDatetimePickerModule, NgxMatNativeDateModule, NgxMatTimepickerMod
     FormsModule,
     NgxMatTimepickerModule,
     NgxMatDatetimePickerModule,
-    NgxMatNativeDateModule
+    NgxMatNativeDateModule,
+    MatPaginatorModule
   ]
 })
 export class AppModule { }

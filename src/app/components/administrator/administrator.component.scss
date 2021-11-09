@@ -47,6 +47,12 @@
 
         table{
             width: 100%;
+
+            td {
+                padding-right: 0.5rem;
+                padding-right: 0.5rem;
+                width: calc(100% / 5.5) !important;
+              }
         }
     }
 }

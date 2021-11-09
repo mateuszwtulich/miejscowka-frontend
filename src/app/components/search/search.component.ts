@@ -83,7 +83,7 @@ export class SearchComponent implements OnInit {
     if (this.filteredString.length === 1 && $event.key !== 'Backspace') {
       this.beforeKeydownPlaces = this.filteredPlaces;
     }
-    this.filteredPlaces = this.filteredPlaces.filter(place => place.name?.toLocaleLowerCase().startsWith(this.filteredString.toLocaleLowerCase()));
+    this.filteredPlaces = this.filteredPlaces.filter(place => place.name?.toLocaleLowerCase().includes(this.filteredString.toLocaleLowerCase()));
   }
 
   loadAllPlaces() {
@@ -119,12 +119,15 @@ export class SearchComponent implements OnInit {
     this.setApropriateSize();
   }
 
-  openPlaceDetailsDialog() {
+  openPlaceDetailsDialog(placeCto: PlaceCto) {
     this.dialog.open(PlaceDetailsComponent, {
       width: '100vw',
       maxWidth: '100vw',
       maxHeight: '100vh',
-      height: 'fit-content'
+      height: 'fit-content',
+      data: {
+        place: placeCto
+      }
     });
   }
 

@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
-import { MatDialogRef } from '@angular/material/dialog';
+import { Component, Inject, OnInit } from '@angular/core';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { ScaleType } from '@swimlane/ngx-charts';
+import { PlaceCto } from 'src/app/model/PlaceCto';
 import { single } from './data';
 
 @Component({
@@ -10,8 +11,8 @@ import { single } from './data';
 })
 export class PlaceDetailsComponent implements OnInit {
   single: any[] = [];
-  multi: any[] = [];
   view: number[] = [700, 400];
+  place: PlaceCto;
 
   // options
   schemeType = ScaleType.Ordinal;
@@ -24,15 +25,16 @@ export class PlaceDetailsComponent implements OnInit {
   showYAxisLabel = true;
   yAxisLabel = 'Zatłoczenie';
 
-  isFavorite = false;
   columnNumber = 2;
   ratio='6:7';
   public isSpinnerDisplayed = false;
 
   constructor(
+    @Inject(MAT_DIALOG_DATA) public data: any,
     public dialogRef: MatDialogRef<PlaceDetailsComponent>,
   ) {
-    Object.assign(this, { single })
+    Object.assign(this, { single });
+    this.place = data.place;
    }
 
    onSelect(event: any) {
@@ -53,7 +55,7 @@ export class PlaceDetailsComponent implements OnInit {
   }
 
   toggleFavorite() {
-    this.isFavorite = !this.isFavorite;
+    this.place.isFavourite = !this.place.isFavourite;
   }
 
   private onSpinnerDisplayed() {

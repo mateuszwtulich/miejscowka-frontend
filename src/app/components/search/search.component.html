@@ -16,7 +16,7 @@
                 <mat-select
                     matInput
                     formControlName="placeCategory">
-                  <mat-option (click)="showAllPlaces()" value="'Wszystkie'"> Wszystkie </mat-option>
+                  <mat-option (click)="showAllPlaces()" value="''"></mat-option>
                   <mat-option (click)="filterByCategory(category)" *ngFor="let category of categoryService.categories$ | async" [value]="category">{{ category.name }}</mat-option>
                 </mat-select>
             </mat-form-field>
@@ -25,12 +25,12 @@
     <mat-grid-list [cols]="columnNumber" [rowHeight]="ratio" (window:resize)="onResize($event)">
         <mat-grid-tile *ngFor="let place of filteredPlaces">
             <mat-card class="mat-elevation-z2">
-                <mat-card-header (click)="openPlaceDetailsDialog()">
+                <mat-card-header (click)="openPlaceDetailsDialog(place)">
                     <mat-card-title>{{ place.name }}</mat-card-title>
                     <mat-card-subtitle>{{ place.categoryName }}</mat-card-subtitle>
                   </mat-card-header>
-                  <img mat-card-image src="{{place.imageUrl}}" alt="Photo of place" (click)="openPlaceDetailsDialog()">
-                  <mat-card-content (click)="openPlaceDetailsDialog()">
+                  <img mat-card-image src="{{place.imageUrl}}" alt="Photo of place" (click)="openPlaceDetailsDialog(place)">
+                  <mat-card-content (click)="openPlaceDetailsDialog(place)">
                     <p>{{ place.description }}</p>
                   </mat-card-content>
                   <mat-card-actions>

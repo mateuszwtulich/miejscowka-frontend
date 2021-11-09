@@ -1,9 +1,15 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
+import { MatPaginator } from '@angular/material/paginator';
 import { MatSort, Sort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
-import { Subscription } from 'rxjs';
+import { Subject, Subscription } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
+import { CategoryEto } from 'src/app/model/CategoryEto';
+import { PlaceCto } from 'src/app/model/PlaceCto';
 import { AdministratorService } from 'src/app/services/administrator.service';
+import { CategoryService } from 'src/app/services/category.service';
+import { PlaceService } from 'src/app/services/place.service';
 import { PlaceEto } from '../../model/PlaceEto';
 import { SortUtil } from '../../utils/SortUtil';
 
@@ -16,37 +22,60 @@ export class AdministratorComponent implements OnInit {
 
   searchForm: FormGroup;
   public displayedColumns: string[] = ['name', 'street', 'buildingNumber', 'capacity', 'category', 'actions'];
-  public dataSource: MatTableDataSource<PlaceEto> = new MatTableDataSource([new PlaceEto("Cybermachina", "2312312312222", "23", 30, "Bar/Restauracja", "sdasdasd")]);
+  public dataSource: MatTableDataSource<PlaceCto> = new MatTableDataSource();
   public isSpinnerDisplayed = false;
-  public subscription = new Subscription();
-  // @ViewChild(MatPaginator) paginator: MatPaginator;
-  // @ViewChild(MatSort) sort: MatSort;
+  searchIn$: EventEmitter<number> = new EventEmitter();
+  private readonly unsubscribe = new Subject();
+  @ViewChild(MatPaginator) paginator: MatPaginator | null = null;
+  @ViewChild(MatSort) sort: MatSort | null = null;
 
   constructor(
-    // private serviceService: ServiceService,
+    private placeService: PlaceService,
     private administratorService: AdministratorService,
     private _formBuilder: FormBuilder,
+    public categoryService: CategoryService,
   ) { 
     this.searchForm = this._formBuilder.group({
       placeName: [''],
       placeCategory: ['']
     });
-    this.setDataSourceSettings();
   }
 
   ngOnInit(): void {
     this.onSpinnerDisplayed();
     this.loadsAllPlaces();
+    this.loadCategories();
+  }
+
+  showAllPlaces() {
+    this.dataSource.filter = '';
+
+    if (this.dataSource.paginator) {
+      this.dataSource.paginator.firstPage();
+    }
+  }
+
+  filterByCategory(category: CategoryEto) {
+    this.dataSource.filter = (category.name as string).trim().toLowerCase();
+
+    if (this.dataSource.paginator) {
+      this.dataSource.paginator.firstPage();
+    }
+  }
+
+  private loadCategories() {
+    this.categoryService.findAllCategories();
   }
 
   private loadsAllPlaces() {
-    // this.serviceService.getAllServices();
+    this.placeService.findAllPlaces();
 
-    // this.subscription.add(this.serviceService.servicesData.subscribe(
-    //   (services) => {
-    //     this.dataSource = new MatTableDataSource(services);
-    //     this.setDataSourceSettings();
-    //   }))
+    this.placeService.places$
+      .pipe(takeUntil(this.unsubscribe))
+      .subscribe((places: PlaceCto[]) => {
+        this.dataSource = new MatTableDataSource(places);
+        this.observeOnFilterPredicateChange();
+      });
   }
 
   private onSpinnerDisplayed() {
@@ -55,13 +84,19 @@ export class AdministratorComponent implements OnInit {
     // }));
   }
 
-  private setDataSourceSettings() {
-    // this.dataSource.paginator = this.paginator;
-    // this.dataSource.sort = this.sort;
-    this.dataSource.filterPredicate = this.prepareFilterPredicate();
+  private observeOnFilterPredicateChange() {
+    this.dataSource.paginator = this.paginator;
+    this.dataSource.sort = this.sort;
+    this.searchIn$
+      .pipe(takeUntil(this.unsubscribe))
+      .subscribe(value => {
+        console.log(value)
+        this.dataSource.filterPredicate = value == 1 ? this.prepareFilterPredicateForName() : this.prepareFilterPredicateForCategory()
+      })
   }
 
   applyFilter(event: Event) {
+    this.searchIn$.next(1);
     const filterValue = (event.target as HTMLInputElement).value;
     this.dataSource.filter = filterValue.trim().toLowerCase();
 
@@ -69,14 +104,27 @@ export class AdministratorComponent implements OnInit {
       this.dataSource.paginator.firstPage();
     }
   }
+  
+  searchFilter(placeName: string | undefined) {
+    this.searchIn$.next(0);
+    this.dataSource.filter = (placeName as string).trim().toLowerCase();
 
-  private prepareFilterPredicate(): (data: PlaceEto, filter: string) => boolean {
-    return (data: PlaceEto, filter: string) => {
-      // let inIndicators: boolean = !!data.indicatorEtoList.find(indicator => indicator.name.toLocaleLowerCase().includes(filter));
+    if (this.dataSource.paginator) {
+      this.dataSource.paginator.firstPage();
+    }
+  }
 
-      // return data.name.toLocaleLowerCase().includes(filter) || inIndicators ||
-      //   this.translate.instant("table." + data.locale).toLocaleLowerCase().includes(filter) || data.basePrice.toFixed().includes(filter);
-      return false;
+  private prepareFilterPredicateForName(): (data: PlaceCto, filter: string) => boolean {
+    this.searchForm.controls['placeCategory'].setValue('');
+    return (data: PlaceCto, filter: string) => {
+      return (data.name as string).toLocaleLowerCase().includes(filter);
+    };
+  }
+
+  private prepareFilterPredicateForCategory(): (data: PlaceCto, filter: string) => boolean {
+    this.searchForm.controls['placeName'].setValue('');
+    return (data: PlaceCto, filter: string) => {
+      return (data.categoryName as string).toLocaleLowerCase().includes(filter);
     };
   }
 
@@ -90,6 +138,8 @@ export class AdministratorComponent implements OnInit {
       switch (sort.active) {
         case "name":
           return SortUtil.compare(a.name, b.name, isAsc);
+        case "categoryName":
+          return SortUtil.compare(a.categoryName, b.categoryName, isAsc);
         // case "locale":
         //   return SortUtil.compare(this.translate.instant("services." + a.locale), this.translate.instant("services." + b.locale), isAsc);
         // case "basePrice":
@@ -108,7 +158,6 @@ export class AdministratorComponent implements OnInit {
 
   modifyPlace(place: PlaceEto) {
     this.administratorService.modifyPlace(place);
-    // const dialogRef = this.dialog.open(ModifyServiceComponent, { data: service, height: '55%', width: '45%' });
   }
 
   deletePlace(place: PlaceEto) {
@@ -116,6 +165,7 @@ export class AdministratorComponent implements OnInit {
   }
 
   ngOnDestroy() {
-    this.subscription.unsubscribe();
+    this.unsubscribe.next();
+    this.unsubscribe.complete();    
   }
 }
