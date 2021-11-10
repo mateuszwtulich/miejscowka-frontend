@@ -17,7 +17,6 @@ export class AddPlaceComponent implements OnInit {
   placeForm: FormGroup;
   public subscription = new Subscription();
   public isSpinnerDisplayed: boolean = false;
-  categories = [{name: "Bar"}, {name:"Obiekt sportowy"}];
 
   constructor(
     private _formBuilder: FormBuilder,

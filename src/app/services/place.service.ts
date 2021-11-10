@@ -84,7 +84,25 @@ export class PlaceService {
   }
 
   public updatePlace(placeTo: PlaceTo, placeId: number) {
+    const placeCto = {
+      id: 0,
+      name: placeTo.name,
+      capacity: placeTo.capacity,
+      description: placeTo.description,
+      street: placeTo.street,
+      buildingNumber: placeTo.buildingNumber,
+      apartmentNumber: placeTo.apartmentNumber,
+      categoryName: "Test",
+      openingHoursTo: placeTo.openingHoursTo,
+      lastOccupancyTo: this.lastOccupancyTo
+    } as PlaceCto
 
+    this.placesData.next(this.placesData.value.map(place => {
+      if (place.id === placeId) {
+        return placeCto;
+      }
+      return place;
+    }))
   }
 
   public deletePlace(placeId: number) {

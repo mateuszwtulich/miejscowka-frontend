@@ -25,7 +25,6 @@
                 <mat-select
                     matInput
                     formControlName="category" required>
-                  <mat-option value="'Wszystkie'"> Wszystkie </mat-option>
                   <mat-option *ngFor="let category of categoryService.categories$ | async" [value]="category">{{ category.name }}</mat-option>
                 </mat-select>
             </mat-form-field>

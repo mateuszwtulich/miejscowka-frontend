@@ -34,7 +34,8 @@
             <mat-grid-tile>
                 <mat-card class="mat-elevation-z2">
                     <mat-card-header>
-                        <mat-card-title class="warn">Zamknięte</mat-card-title>
+                        <!-- <mat-card-title class="warn">Zamknięte</mat-card-title> -->
+                        <mat-card-title class="positive">Otwarte</mat-card-title>
                       </mat-card-header>
                       <mat-card-content>
                           <div id="opening-hours">
@@ -73,7 +74,7 @@
                        
                       </mat-card-content>
                       <mat-card-header>
-                        <mat-card-title class="warn trend" *ngIf="false">Prognozowany wzrost
+                        <mat-card-title class="warn trend" *ngIf="true">Prognozowany wzrost
                             <mat-icon mat-list-avatar>
                                 trending_up
                             </mat-icon>
@@ -83,7 +84,7 @@
                                 trending_down
                             </mat-icon>
                         </mat-card-title>
-                        <mat-card-title class="trend" *ngIf="true">Prognozowana stabilizacja
+                        <mat-card-title class="trend" *ngIf="false">Prognozowana stabilizacja
                             <mat-icon mat-list-avatar>
                                 trending_flat
                             </mat-icon>

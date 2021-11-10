@@ -1,1 +1,132 @@
-<p>modify-place works!</p>
+<div id="dialog">
+    <div *ngIf="isSpinnerDisplayed" class="spinner-wrapper">
+        <mat-spinner color="accent"></mat-spinner>
+    </div>
+    <div id="modal-top">
+        <h2 class="mat-h2"> Edytuj miejscówkę </h2>
+        <button id="close" mat-icon-button (click)="closeDialog()">
+            <mat-icon class="material-icons">close</mat-icon>
+        </button>
+    </div>
+
+    <div id="content">
+        <form [formGroup]="placeForm" (ngSubmit)="updatePlace()">
+            <mat-form-field class="full-width-input" appearance="outline" color="accent">
+                <mat-label> Nazwa </mat-label>
+                    <input matInput formControlName="name" name="name" required>
+            </mat-form-field>
+            <mat-form-field class="full-width-input" appearance="outline" color="accent">
+                <mat-label> Opis </mat-label>
+                    <input matInput formControlName="description" name="description">          
+            </mat-form-field>
+
+            <mat-form-field class="full-width-input" appearance="outline" color="accent">
+                <mat-label>Kategoria obiektu</mat-label>
+                <mat-select
+                    matInput
+                    formControlName="category" name = "category" required>
+                  <mat-option *ngFor="let category of categories" [value]="category">{{ category.name }}</mat-option>
+                </mat-select>
+            </mat-form-field>
+            <mat-form-field class="full-width-input" appearance="outline" color="accent">
+                <mat-label> Pojemność </mat-label>
+                <input matInput formControlName="capacity" required>
+              </mat-form-field>
+
+
+            <table class="address-table" cellspacing="0"><tr>
+
+                <td><mat-form-field class="full-width-input" appearance="outline" color="accent">
+                <mat-label> Ulica </mat-label>
+                <input matInput formControlName="street" required>
+              </mat-form-field></td>
+              <td><mat-form-field class="full-width-input" appearance="outline" color="accent">
+                <mat-label> Numer budynku </mat-label>
+                <input matInput formControlName="buildingNumber" required>
+              </mat-form-field></td>
+              <td><mat-form-field class="full-width-input" appearance="outline" color="accent">
+                <mat-label> Numer mieszkania </mat-label>
+                <input matInput formControlName="apartmentNumber">
+              </mat-form-field></td>
+
+            </tr></table>
+
+            <table class="example-full-width" cellspacing="0"><tr>
+                <td class="day-of-week">
+                    <div class="one-line">
+                        <mat-label class="day-label"> Poniedziałek od: &nbsp;</mat-label>
+                        <ngx-mat-timepicker formControlName="mondayFrom" [showSpinners]="false" required></ngx-mat-timepicker>
+                    </div>
+                    <div class="one-line">
+                        <mat-label class="day-label"> Poniedziałek do: &nbsp;</mat-label>
+                        <ngx-mat-timepicker formControlName="mondayTo" [showSpinners]="false" required></ngx-mat-timepicker>
+                    </div>
+                </td>
+                <td class="day-of-week">
+                    <div class="one-line">
+                        <mat-label class="day-label"> Wtorek od: &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</mat-label>
+                        <ngx-mat-timepicker formControlName="tuesdayFrom" [showSpinners]="false" required></ngx-mat-timepicker>
+                    </div>
+                    <div class="one-line">
+                        <mat-label class="day-label"> Wtorek do: &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</mat-label>
+                        <ngx-mat-timepicker formControlName="tuesdayTo" [showSpinners]="false" required></ngx-mat-timepicker>
+                    </div>
+                </td>
+                <td class="day-of-week">
+                    <div class="one-line">
+                        <mat-label class="day-label"> Środa od: &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</mat-label>
+                        <ngx-mat-timepicker formControlName="wednesdayFrom" [showSpinners]="false" required></ngx-mat-timepicker>
+                    </div>
+                    <div class="one-line">
+                        <mat-label class="day-label"> Środa do: &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</mat-label>
+                        <ngx-mat-timepicker formControlName="wednesdayTo" [showSpinners]="false" required></ngx-mat-timepicker>
+                    </div>
+                </td>
+                <td class="day-of-week">
+                    <div class="one-line">
+                        <mat-label class="day-label"> Czwartek od: &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</mat-label>
+                        <ngx-mat-timepicker formControlName="thursdayFrom" [showSpinners]="false" required></ngx-mat-timepicker>
+                    </div>
+                    <div class="one-line">
+                        <mat-label class="day-label"> Czwartek do: &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</mat-label>
+                        <ngx-mat-timepicker formControlName="thursdayTo" [showSpinners]="false" required></ngx-mat-timepicker>
+                    </div>
+                </td>
+                <td class="day-of-week">
+                    <div class="one-line">
+                        <mat-label class="day-label"> Piątek od: &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</mat-label>
+                        <ngx-mat-timepicker formControlName="fridayFrom" [showSpinners]="false" required></ngx-mat-timepicker>
+                    </div>
+                    <div class="one-line">
+                        <mat-label class="day-label"> Piątek do: &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</mat-label>
+                        <ngx-mat-timepicker formControlName="fridayTo" [showSpinners]="false" required></ngx-mat-timepicker>
+                    </div>
+                </td>
+                <td class="day-of-week">
+                    <div class="one-line">
+                        <mat-label class="day-label"> Sobota od: &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</mat-label>
+                        <ngx-mat-timepicker formControlName="saturdayFrom" [showSpinners]="false" required></ngx-mat-timepicker>
+                    </div>
+                    <div class="one-line">
+                        <mat-label class="day-label"> Sobota do: &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</mat-label>
+                        <ngx-mat-timepicker formControlName="saturdayTo" [showSpinners]="false" required></ngx-mat-timepicker>
+                    </div>
+                </td>
+                <td class="day-of-week">
+                    <div class="one-line">
+                        <mat-label class="day-label"> Niedziela od: &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</mat-label>
+                        <ngx-mat-timepicker formControlName="sundayFrom" [showSpinners]="false" required></ngx-mat-timepicker>
+                    </div>
+                    <div class="one-line">
+                        <mat-label class="day-label"> Niedziela do: &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</mat-label>
+                        <ngx-mat-timepicker formControlName="sundayTo" [showSpinners]="false" required></ngx-mat-timepicker>
+                    </div>
+                </td>
+            </tr></table>
+
+            <div class="button-wrapper">
+                <button id="add" mat-flat-button type="submit" color="accent"> Dodaj </button>
+            </div>
+        </form>
+    </div>
+</div>
