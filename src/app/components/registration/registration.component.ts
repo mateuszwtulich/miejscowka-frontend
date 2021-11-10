@@ -56,10 +56,10 @@ export class RegistrationComponent implements OnInit {
 
   getErrorMessage() {
     if (this.f.email.hasError('required')) {
-      return 'registration.email-null';
+      return 'Wyamgane';
     }
 
-    return this.f.email.hasError('email') ? 'registration.email-invalid' : '';
+    return this.f.email.hasError('email') ? 'Nieodpowiedni adres e-mail' : '';
   }
 
   get f(): { [key: string]: AbstractControl } {

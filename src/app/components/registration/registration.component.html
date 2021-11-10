@@ -29,13 +29,13 @@
                             <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
                         </button>
                         <mat-error *ngIf="f.password.hasError('required')">
-                            registration.enter-password
+                            Wymagane
                         </mat-error>
                         <mat-error *ngIf="f.password.hasError('minlength')">
-                            registration.enter-password min
+                            Hasło jest za krótkie
                         </mat-error>
                         <mat-error *ngIf="f.password.hasError('maxlength')">
-                            registration.enter-password max
+                            Hasło jest za długie
                         </mat-error>
                     </mat-form-field>
                     <mat-form-field appearance="outline" color="accent">
@@ -43,7 +43,7 @@
                         <input matInput [type]="hide ? 'password' : 'text'"
                             formControlName="confirmPassword">
                         <mat-error *ngIf="f.confirmPassword.hasError('matching')">
-                            registration.password-not-match
+                            Podane hasła nie są identyczne
                         </mat-error>
                         <button mat-icon-button matSuffix (click)="hide = !hide"
                             [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
