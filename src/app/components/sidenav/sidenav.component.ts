@@ -33,7 +33,6 @@ export class SidenavComponent implements OnInit {
   private onNavigationChange(){
     this.subscription.add(this.router.events.subscribe(event => {
       if (event instanceof NavigationEnd) {
-        console.log(event.url)
        this.isHomePage = event?.url === "/home" || event?.url === "/";
        this.isAdminPage = event?.url === "/administrator";
       }

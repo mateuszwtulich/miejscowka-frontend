@@ -1,24 +1,45 @@
-import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { HttpClient } from '@angular/common/http';
+import { Injectable, OnDestroy } from '@angular/core';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { BehaviorSubject, Observable, Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 import { CategoryEto } from '../model/CategoryEto';
+import { RestServiceUrl } from '../utils/RestServiceUrl';
 
 @Injectable({
   providedIn: 'root'
 })
-export class CategoryService {
+export class CategoryService implements OnDestroy{
 
-  private readonly CATEGORIES: CategoryEto[] = [
-    {id: 1, name: "Restauracja", description: undefined}, 
-    {id: 2, name:"Bar", description: undefined}, 
-    {id: 3, name:"Basen", description: undefined},
-    {id: 4, name:"Siłownia", description: undefined}, 
-    {id: 5, name:"Hala Sportowa", description:undefined}]
+  private readonly unsubscribe = new Subject();
   private categoriesData = new BehaviorSubject<CategoryEto[]>([]);
   public categories$: Observable<CategoryEto[]> = this.categoriesData.asObservable();
+  private spinnerDataSource = new BehaviorSubject(false);
+  public spinner$ = this.spinnerDataSource.asObservable();
   
-  constructor() { }
+  constructor(
+    private http: HttpClient,
+    private snackbar: MatSnackBar,
+  ) { }
+
+  ngOnDestroy(): void {
+    this.unsubscribe.next();
+    this.unsubscribe.complete();
+  }
 
   public findAllCategories() {
-    this.categoriesData.next(this.CATEGORIES);
+    this.spinnerDataSource.next(true);
+    this.http.get<CategoryEto[]>(`${RestServiceUrl.CATEGORY_ENDPOINT}`)
+    .pipe(takeUntil(this.unsubscribe))
+    .subscribe(
+      (categories: CategoryEto[]) => {
+        this.spinnerDataSource.next(false);
+        this.categoriesData.next(categories);
+      },
+      (e) => {
+        this.snackbar.open(e.error.message, 'ERROR', { duration: 5000 });
+        this.spinnerDataSource.next(false);
+      }
+    )
   }
 }

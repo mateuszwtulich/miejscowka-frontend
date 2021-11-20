@@ -55,7 +55,7 @@ export class PlaceDetailsComponent implements OnInit {
   }
 
   toggleFavorite() {
-    this.place.isFavourite = !this.place.isFavourite;
+    this.place.favourite = !this.place.favourite;
   }
 
   private onSpinnerDisplayed() {

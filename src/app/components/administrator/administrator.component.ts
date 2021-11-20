@@ -23,7 +23,6 @@ export class AdministratorComponent implements OnInit {
   searchForm: FormGroup;
   public displayedColumns: string[] = ['name', 'street', 'buildingNumber', 'capacity', 'category', 'actions'];
   public dataSource: MatTableDataSource<PlaceCto> = new MatTableDataSource();
-  public isSpinnerDisplayed = false;
   searchIn$: EventEmitter<number> = new EventEmitter();
   private readonly unsubscribe = new Subject();
   @ViewChild(MatPaginator) paginator: MatPaginator | null = null;
@@ -42,7 +41,6 @@ export class AdministratorComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.onSpinnerDisplayed();
     this.loadsAllPlaces();
     this.loadCategories();
   }
@@ -78,19 +76,12 @@ export class AdministratorComponent implements OnInit {
       });
   }
 
-  private onSpinnerDisplayed() {
-    // this.subscription.add(this.serviceService.spinnerData.subscribe((isSpinnerDisplayed: boolean) => {
-    //   this.isSpinnerDisplayed = isSpinnerDisplayed;
-    // }));
-  }
-
   private observeOnFilterPredicateChange() {
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
     this.searchIn$
       .pipe(takeUntil(this.unsubscribe))
       .subscribe(value => {
-        console.log(value)
         this.dataSource.filterPredicate = value == 1 ? this.prepareFilterPredicateForName() : this.prepareFilterPredicateForCategory()
       })
   }

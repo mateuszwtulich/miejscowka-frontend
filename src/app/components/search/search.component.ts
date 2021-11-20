@@ -110,7 +110,7 @@ export class SearchComponent implements OnInit {
   }
 
   toggleFavorite(place: PlaceCto) {
-    place.isFavourite = !place.isFavourite;
+    place.favourite = !place.favourite;
 
     //TODO post to backend
   }

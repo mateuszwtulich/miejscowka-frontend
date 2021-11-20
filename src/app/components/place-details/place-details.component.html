@@ -22,10 +22,10 @@
                     <mat-card-actions>
                         <mat-progress-bar mode="determinate" [value]="place.lastOccupancyTo?.percentageOccupancy"></mat-progress-bar>
                         <p>{{ place.lastOccupancyTo?.percentageOccupancy }}%</p>
-                        <mat-icon mat-list-avatar *ngIf="place.isFavourite" (click)="toggleFavorite()">
+                        <mat-icon mat-list-avatar *ngIf="place.favourite" (click)="toggleFavorite()">
                             favorite
                         </mat-icon>
-                        <mat-icon mat-list-avatar *ngIf="!place.isFavourite" (click)="toggleFavorite()">
+                        <mat-icon mat-list-avatar *ngIf="!place.favourite" (click)="toggleFavorite()">
                             favorite_border
                         </mat-icon>
                     </mat-card-actions>

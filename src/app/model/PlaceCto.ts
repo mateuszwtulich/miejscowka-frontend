@@ -11,7 +11,7 @@ export class PlaceCto {
     apartmentNumber: string | undefined;
     categoryName: string | undefined;
     lastOccupancyTo: OccupancyTo | undefined;
-    isFavourite: boolean | undefined;
+    favourite: boolean | undefined;
     imageUrl: string | undefined;
     openingHoursTo: OpeningHoursTo | undefined;
 }

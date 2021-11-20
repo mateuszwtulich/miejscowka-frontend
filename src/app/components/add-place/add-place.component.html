@@ -1,5 +1,5 @@
 <div id="dialog">
-    <div *ngIf="isSpinnerDisplayed" class="spinner-wrapper">
+    <div *ngIf="categoryService.spinner$ | async" class="spinner-wrapper">
         <mat-spinner color="accent"></mat-spinner>
     </div>
     <div id="modal-top">

@@ -18,7 +18,6 @@ export class ModifyPlaceComponent implements OnInit {
 
   placeForm: FormGroup;
   private readonly unsubscribe = new Subject();
-  public isSpinnerDisplayed: boolean = false;
   categories: CategoryEto[] | undefined;
 
   constructor(
@@ -51,13 +50,9 @@ export class ModifyPlaceComponent implements OnInit {
         sundayFrom: [new Date(), Validators.required],
         sundayTo: [new Date(), Validators.required],
       });
-
-      console.log(this.placeForm)
-     }
+    }
   ngOnInit(): void {
     this.loadCategories();
-    this.onSpinnerDisplayed();
-    this.uploadCategory();
   }
 
   private loadCategories() {
@@ -67,18 +62,13 @@ export class ModifyPlaceComponent implements OnInit {
       .pipe(takeUntil(this.unsubscribe))
       .subscribe((categories: CategoryEto[]) => {
         this.categories = categories;
+        this.uploadCategory();
       });
   }
 
   private uploadCategory() {
     this.placeForm.controls['category']
       .patchValue((this.categories as CategoryEto[]).find(category => category.name === this.data.placeCto.categoryName));
-  }
-
-  private onSpinnerDisplayed() {
-    // this.subscription.add(this.userService.spinnerData.subscribe((isSpinnerDisplayed: boolean) => {
-    //   this.isSpinnerDisplayed = isSpinnerDisplayed;
-    // }));
   }
 
   updatePlace() {

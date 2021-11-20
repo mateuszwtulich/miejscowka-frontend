@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { InjectionToken, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -32,6 +32,8 @@ import { ModifyPlaceComponent } from './components/modify-place/modify-place.com
 import { DeletePlaceComponent } from './components/delete-place/delete-place.component';
 import { NgxMatDatetimePickerModule, NgxMatNativeDateModule, NgxMatTimepickerModule } from '@angular-material-components/datetime-picker';
 import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatSnackBarConfig, MatSnackBarModule, MAT_SNACK_BAR_DEFAULT_OPTIONS } from '@angular/material/snack-bar';
+import {HttpBackend, HttpClient, HttpClientModule, HttpHandler} from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -72,10 +74,14 @@ import { MatPaginatorModule } from '@angular/material/paginator';
     NgxMatTimepickerModule,
     NgxMatDatetimePickerModule,
     NgxMatNativeDateModule,
-    MatPaginatorModule
+    MatPaginatorModule,
+    MatSnackBarModule,
+    HttpClientModule
   ],
   providers: [{ provide: MAT_DATE_LOCALE, useValue: 'pl-PL' }],
-  bootstrap: [AppComponent],
+  bootstrap: [
+    AppComponent,
+  ],
   exports: [
     SidenavComponent,
     HomeComponent,
@@ -101,7 +107,8 @@ import { MatPaginatorModule } from '@angular/material/paginator';
     NgxMatTimepickerModule,
     NgxMatDatetimePickerModule,
     NgxMatNativeDateModule,
-    MatPaginatorModule
+    MatPaginatorModule,
+    MatSnackBarModule
   ]
 })
 export class AppModule { }

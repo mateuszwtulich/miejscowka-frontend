@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef } from '@angular/material/dialog';
-import { Subscription } from 'rxjs';
 import { OpeningHoursTo } from 'src/app/model/OpeningHoursTo';
 import { PlaceTo } from 'src/app/model/PlaceTo';
 import { CategoryService } from 'src/app/services/category.service';
@@ -15,8 +14,6 @@ import { PlaceService } from 'src/app/services/place.service';
 export class AddPlaceComponent implements OnInit {
 
   placeForm: FormGroup;
-  public subscription = new Subscription();
-  public isSpinnerDisplayed: boolean = false;
 
   constructor(
     private _formBuilder: FormBuilder,
@@ -50,17 +47,10 @@ export class AddPlaceComponent implements OnInit {
      }
   ngOnInit(): void {
     this.loadCategories();
-    this.onSpinnerDisplayed();
   }
 
   private loadCategories() {
     this.categoryService.findAllCategories();
-  }
-
-  private onSpinnerDisplayed() {
-    // this.subscription.add(this.userService.spinnerData.subscribe((isSpinnerDisplayed: boolean) => {
-    //   this.isSpinnerDisplayed = isSpinnerDisplayed;
-    // }));
   }
 
   addPlace() {
@@ -99,9 +89,5 @@ export class AddPlaceComponent implements OnInit {
 
   closeDialog() {
     this.dialogRef.close();
-  }
-
-  ngOnDestroy() {
-    this.subscription.unsubscribe();
   }
 }
