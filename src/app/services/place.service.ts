@@ -3,7 +3,6 @@ import { Injectable } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { BehaviorSubject, Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
-import { OccupancyTo } from '../model/OccupancyTo';
 import { PlaceCto } from '../model/PlaceCto';
 import { PlaceTo } from '../model/PlaceTo';
 import { RestServiceUrl } from '../utils/RestServiceUrl';
@@ -12,12 +11,6 @@ import { RestServiceUrl } from '../utils/RestServiceUrl';
   providedIn: 'root'
 })
 export class PlaceService {
-
-  private readonly lastOccupancyTo: OccupancyTo = {
-    placeId: 0,
-    numberOfPeople: 13,
-    percentageOccupancy: 50
-  }
 
   private readonly unsubscribe = new Subject();
   private placesData = new BehaviorSubject<PlaceCto[]>([]);
@@ -33,6 +26,38 @@ export class PlaceService {
   public findAllPlaces() {
     this.spinnerDataSource.next(true);
     this.http.get<PlaceCto[]>(`${RestServiceUrl.PLACE_ENDPOINT}`)
+    .pipe(takeUntil(this.unsubscribe))
+    .subscribe(
+      (places: PlaceCto[]) => {
+        this.spinnerDataSource.next(false);
+        this.placesData.next(places);
+      },
+      (e) => {
+        this.snackbar.open(e.error.message, 'ERROR', { duration: 5000 });
+        this.spinnerDataSource.next(false);
+      }
+    )
+  }
+
+  public findAllPlacesWithUserInfo(userId: number) {
+    this.spinnerDataSource.next(true);
+    this.http.get<PlaceCto[]>(`${RestServiceUrl.PLACE_OF_LOGGED_USER_ENDPOINT}` + userId)
+    .pipe(takeUntil(this.unsubscribe))
+    .subscribe(
+      (places: PlaceCto[]) => {
+        this.spinnerDataSource.next(false);
+        this.placesData.next(places);
+      },
+      (e) => {
+        this.snackbar.open(e.error.message, 'ERROR', { duration: 5000 });
+        this.spinnerDataSource.next(false);
+      }
+    )
+  }
+
+  public findFavouritePlaces(userId: number) {
+    this.spinnerDataSource.next(true);
+    this.http.get<PlaceCto[]>(`${RestServiceUrl.FAVOURITE_PLACE_ENDPOINT}` + userId)
     .pipe(takeUntil(this.unsubscribe))
     .subscribe(
       (places: PlaceCto[]) => {
@@ -63,6 +88,36 @@ export class PlaceService {
     )
   }
 
+  public addToFavourites(userId: number, placeId: number | undefined) {
+    this.spinnerDataSource.next(true);
+    this.http.post<PlaceCto>(`${RestServiceUrl.PLACE_ENDPOINT}/` + placeId + '/favourite/' + userId, null)
+    .pipe(takeUntil(this.unsubscribe))
+    .subscribe(
+      (placeCto: PlaceCto) => {
+        this.spinnerDataSource.next(false);
+        this.updatePlaceData(placeId, placeCto);
+      },
+      (e) => {
+        this.snackbar.open(e.error.message, 'ERROR', { duration: 5000 });
+        this.spinnerDataSource.next(false);
+      })
+  }
+
+  public deleteFromFavourites(userId: number, placeId: number | undefined) {
+    this.spinnerDataSource.next(true);
+    this.http.delete<PlaceCto>(`${RestServiceUrl.PLACE_ENDPOINT}/` + placeId + '/favourite/' + userId)
+    .pipe(takeUntil(this.unsubscribe))
+    .subscribe(
+      (placeCto: PlaceCto) => {
+        this.spinnerDataSource.next(false);
+        this.updatePlaceData(placeId, placeCto);
+      },
+      (e) => {
+        this.snackbar.open(e.error.message, 'ERROR', { duration: 5000 });
+        this.spinnerDataSource.next(false);
+      })
+  } 
+
   public updatePlace(placeTo: PlaceTo, placeId: number) {
     this.spinnerDataSource.next(true);
     this.http.put<PlaceCto>(`${RestServiceUrl.PLACE_ENDPOINT}/` + placeId, placeTo)
@@ -70,12 +125,7 @@ export class PlaceService {
     .subscribe(
       (placeCto: PlaceCto) => {
         this.spinnerDataSource.next(false);
-        this.placesData.next(this.placesData.value.map(place => {
-          if (place.id === placeId) {
-            return placeCto;
-          }
-          return place;
-        }))
+        this.updatePlaceData(placeId, placeCto);
       },
       (e) => {
         this.snackbar.open(e.error.message, 'ERROR', { duration: 5000 });
@@ -97,5 +147,14 @@ export class PlaceService {
         this.spinnerDataSource.next(false);
       }
     )
+  }
+
+  private updatePlaceData(placeId: number | undefined, placeCto: PlaceCto) {
+    this.placesData.next(this.placesData.value.map(place => {
+      if (place.id === placeId) {
+        return placeCto;
+      }
+      return place;
+    }))
   }
 }

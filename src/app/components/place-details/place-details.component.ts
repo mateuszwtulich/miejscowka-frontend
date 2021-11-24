@@ -26,7 +26,7 @@ export class PlaceDetailsComponent implements OnInit {
   yAxisLabel = 'Zatłoczenie';
 
   columnNumber = 2;
-  ratio='6:7';
+  ratio='1:2';
   public isSpinnerDisplayed = false;
 
   constructor(

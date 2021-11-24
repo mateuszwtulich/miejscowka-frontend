@@ -33,7 +33,9 @@ import { DeletePlaceComponent } from './components/delete-place/delete-place.com
 import { NgxMatDatetimePickerModule, NgxMatNativeDateModule, NgxMatTimepickerModule } from '@angular-material-components/datetime-picker';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSnackBarConfig, MatSnackBarModule, MAT_SNACK_BAR_DEFAULT_OPTIONS } from '@angular/material/snack-bar';
-import {HttpBackend, HttpClient, HttpClientModule, HttpHandler} from '@angular/common/http';
+import {HttpBackend, HttpClient, HttpClientModule, HttpHandler, HTTP_INTERCEPTORS} from '@angular/common/http';
+import { NgxPermissionsModule } from 'ngx-permissions';
+import { TokenInterceptor } from './security/tokenInterceptor';
 
 @NgModule({
   declarations: [
@@ -76,9 +78,13 @@ import {HttpBackend, HttpClient, HttpClientModule, HttpHandler} from '@angular/c
     NgxMatNativeDateModule,
     MatPaginatorModule,
     MatSnackBarModule,
-    HttpClientModule
+    HttpClientModule,
+    NgxPermissionsModule.forRoot()
   ],
-  providers: [{ provide: MAT_DATE_LOCALE, useValue: 'pl-PL' }],
+  providers: [
+    { provide: MAT_DATE_LOCALE, useValue: 'pl-PL' },
+    { provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true }
+  ],
   bootstrap: [
     AppComponent,
   ],
@@ -108,7 +114,8 @@ import {HttpBackend, HttpClient, HttpClientModule, HttpHandler} from '@angular/c
     NgxMatDatetimePickerModule,
     NgxMatNativeDateModule,
     MatPaginatorModule,
-    MatSnackBarModule
+    MatSnackBarModule,
+    NgxPermissionsModule
   ]
 })
 export class AppModule { }

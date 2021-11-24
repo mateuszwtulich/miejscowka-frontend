@@ -8,8 +8,13 @@
           justify-content: right;
           margin-right: 0;
           margin-left: auto;
+          z-index: 3;
         }
       }
+
+    #content {
+        margin-top: -35px;
+    }
 
     .mat-grid-list {
         width: 100%;
@@ -39,6 +44,14 @@
                     font-size: 30px;
                 }
             }
+
+            .mat-card-title {
+                font-size: 26px;
+            }
+
+            .mat-card-subtitle {
+                font-size: 22px;
+            }
     
             .mat-card-content {
                 
@@ -49,6 +62,7 @@
 
                 p {
                     margin: 0.5%;
+                    font-size: 18px;
                 }
 
                 .day-of-week {
@@ -87,7 +101,7 @@
             }
     
             img {
-                height: 70%;
+                height: 65%;
 
                 @media (max-width: 600px) {
                     height: 60%;
@@ -124,5 +138,9 @@
     padding: 1%;
     @media (max-width: 600px) {
         padding: 0;
+    }
+
+    @media (min-width: 1400px) {
+        overflow-y: hidden;
     }
 }

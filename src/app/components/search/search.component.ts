@@ -9,6 +9,10 @@ import { takeUntil } from 'rxjs/operators';
 import { PlaceService } from 'src/app/services/place.service';
 import { PlaceCto } from 'src/app/model/PlaceCto';
 import { SidenavService } from 'src/app/services/sidenav.service';
+import { LocalStorageService } from '../cache/localStorage.service';
+import { NgxPermissionsService } from 'ngx-permissions';
+import { Router } from '@angular/router';
+import { ApplicationPermission } from 'src/app/model/ApplicationPermission';
 
 @Component({
   selector: 'app-search',
@@ -18,11 +22,11 @@ import { SidenavService } from 'src/app/services/sidenav.service';
 export class SearchComponent implements OnInit {
 
   searchForm: FormGroup;
-  isFavorite = false;
   columnNumber = 3;
   ratio='2:3';
   private allPlaces: PlaceCto[] = [];
   filteredPlaces: PlaceCto[] = [];
+  favouritePlaces: PlaceCto[] = [];
   private filteredString: string = '';
   private beforeKeydownPlaces: PlaceCto[] = [];
 
@@ -33,6 +37,9 @@ export class SearchComponent implements OnInit {
     public categoryService: CategoryService,
     public placeService: PlaceService,
     public sidnavService: SidenavService,
+    private localStorageService: LocalStorageService,
+    private router: Router,
+    private permissionService: NgxPermissionsService,
     protected dialog: MatDialog) {
       this.searchForm = this._formBuilder.group({
         placeName: [''],
@@ -46,6 +53,8 @@ export class SearchComponent implements OnInit {
     this.loadAllPlaces();
     this.observeOnPlaces();
     this.observeOnSorting();
+    this.observeOnFavourite();
+    this.observeOnLogout();
     this.observeOnRefresh();
   }
 
@@ -53,11 +62,46 @@ export class SearchComponent implements OnInit {
     this.categoryService.findAllCategories();
   }
 
+  loadAllPlaces() {
+    this.permissionService.hasPermission([ApplicationPermission.GET_FAVOURITE])
+    .then(hasPermission => {
+      if (hasPermission) {
+        this.placeService.findAllPlacesWithUserInfo(this.localStorageService.getUserId());
+      } else {
+        this.placeService.findAllPlaces();
+      }
+    })
+  }
+
+  observeOnLogout() {
+    this.sidnavService.logout$
+    .pipe(takeUntil(this.unsubscribe))
+    .subscribe(() => {
+      this.updatePlacesAndClearFilters();
+    });
+  }
+
   observeOnRefresh() {
     this.sidnavService.refresh$
     .pipe(takeUntil(this.unsubscribe))
     .subscribe(() => {
-      this.loadAllPlaces();
+      this.updatePlacesAndClearFilters();
+    });
+  }
+
+  private updatePlacesAndClearFilters() {
+    this.loadAllPlaces();
+    this.favouritePlaces = [];
+    this.searchForm.get('placeName')?.setValue('');
+    this.searchForm.get('placeCategory')?.setValue('');
+  }
+
+  observeOnFavourite() {
+    this.sidnavService.favourite$
+    .pipe(takeUntil(this.unsubscribe))
+    .subscribe(() => {
+      this.filteredPlaces = this.allPlaces.filter(place => place.favourite);
+      this.favouritePlaces = this.filteredPlaces;
       this.searchForm.get('placeName')?.setValue('');
       this.searchForm.get('placeCategory')?.setValue('');
     });
@@ -69,6 +113,33 @@ export class SearchComponent implements OnInit {
     .subscribe((desc: boolean) => {
       this.filteredPlaces = this.sidnavService.sortByOccupancy(this.filteredPlaces, desc);
     })
+  }
+
+  observeOnPlaces() {
+    this.placeService.places$
+      .pipe(takeUntil(this.unsubscribe))
+      .subscribe((places) => {
+        this.allPlaces = places as PlaceCto[];
+        this.filteredPlaces = places;
+      });
+  }
+
+  showAllPlaces() {
+    if (this.favouritePlaces.length > 0) {
+      this.filteredPlaces = this.favouritePlaces;
+    } else {
+      this.filteredPlaces = this.allPlaces;
+    }
+    this.searchForm.get('placeName')?.setValue('');
+  }
+
+  filterByCategory(category: CategoryEto) {
+    if (this.favouritePlaces.length > 0) {
+      this.filteredPlaces = this.favouritePlaces.filter(place => place.categoryName === category.name);
+    } else {
+      this.filteredPlaces = this.allPlaces.filter(place => place.categoryName === category.name);
+    }
+    this.searchForm.get('placeName')?.setValue('');
   }
 
   onKeyDown($event: KeyboardEvent) {
@@ -86,33 +157,26 @@ export class SearchComponent implements OnInit {
     this.filteredPlaces = this.filteredPlaces.filter(place => place.name?.toLocaleLowerCase().includes(this.filteredString.toLocaleLowerCase()));
   }
 
-  loadAllPlaces() {
-    this.placeService.findAllPlaces();
+  removeFromFavourites(place: PlaceCto) {
+    this.permissionService.hasPermission([ApplicationPermission.GET_FAVOURITE])
+      .then(hasPermission => {
+        if (hasPermission) {
+          this.placeService.deleteFromFavourites(this.localStorageService.getUserId(), place.id);
+        } else {
+          this.router.navigateByUrl("/login");
+        }
+      })
   }
 
-  observeOnPlaces() {
-    this.placeService.places$
-      .pipe(takeUntil(this.unsubscribe))
-      .subscribe((places) => {
-        this.allPlaces = places as PlaceCto[];
-        this.filteredPlaces = places;
-      });
-  }
-
-  showAllPlaces() {
-    this.filteredPlaces = this.allPlaces;
-    this.searchForm.get('placeName')?.setValue('');
-  }
-
-  filterByCategory(category: CategoryEto) {
-    this.filteredPlaces = this.allPlaces.filter(place => place.categoryName === category.name);
-    this.searchForm.get('placeName')?.setValue('');
-  }
-
-  toggleFavorite(place: PlaceCto) {
-    place.favourite = !place.favourite;
-
-    //TODO post to backend
+  addToFavourites(place: PlaceCto) {
+    this.permissionService.hasPermission([ApplicationPermission.GET_FAVOURITE])
+    .then(hasPermission => {
+      if (hasPermission) {
+        this.placeService.addToFavourites(this.localStorageService.getUserId(), place.id);
+      } else {
+        this.router.navigateByUrl("/login");
+      }
+    })
   }
 
   onResize(event: any) {

@@ -16,17 +16,17 @@
                  class="globe-logo"> -->
         </div>
         <mat-divider></mat-divider>
-        <!-- <a id="search" *ngIf="isHomePage" mat-list-item>
+        <a id="search" *ngIf="isHomePage" (click)="refresh()" mat-list-item>
             <mat-icon mat-list-avatar>
-                search
+                all_inclusive
             </mat-icon>
             <h3 mat-line *ngIf="showFiller">
-                Wyszukiwanie
+                Wszystkie miejscówki
             </h3>
             <p mat-line *ngIf="showFiller">
-                Szukaj po kategorii obiektu
+                Przeglądaj wszystkie dostępne miejscówki
             </p>
-        </a> -->
+        </a>
         <a id="trending_down" *ngIf="isHomePage" (click)="sortPlacesDesc()" mat-list-item>
             <mat-icon mat-list-avatar>
                 trending_down
@@ -49,7 +49,7 @@
                 Filtruj po najbardziej zatłoczonych
             </p>
         </a>
-        <a id="favorite" *ngIf="isHomePage" (click)="navigate()" mat-list-item>
+        <a id="favorite" *ngIf="isHomePage" (click)="loadFavouritePlaces()" mat-list-item>
             <mat-icon mat-list-avatar>
                 favorite
             </mat-icon>
@@ -60,17 +60,19 @@
                 Filtruj po ulubionych
             </p>
         </a>
-        <a id="favorite" *ngIf="isHomePage" (click)="navigateToAdminPage()" mat-list-item>
-            <mat-icon mat-list-avatar>
-                admin_panel_settings
-            </mat-icon>
-            <h3 mat-line *ngIf="showFiller">
-                Panel administratora
-            </h3>
-            <p mat-line *ngIf="showFiller">
-                Dodawaj, usuwaj i modyfikuj miejscówki
-            </p>
-        </a>
+        <div *ngIf="isHomePage">
+            <a id="admin" *ngxPermissionsOnly="['A_CRUD_SUPER']" (click)="navigateToAdminPage()" mat-list-item>
+                <mat-icon mat-list-avatar>
+                    admin_panel_settings
+                </mat-icon>
+                <h3 mat-line *ngIf="showFiller">
+                    Panel administratora
+                </h3>
+                <p mat-line *ngIf="showFiller">
+                    Dodawaj, usuwaj i modyfikuj miejscówki
+                </p>
+            </a>
+        </div>
         <a id="home" *ngIf="!isHomePage" routerLink="/home" mat-list-item>
             <mat-icon mat-list-avatar>
                 home
@@ -82,7 +84,8 @@
                 Szukaj miejscówki
             </p>
         </a>
-        <a id="add" *ngIf="isAdminPage" (click)="addNewPlace()" mat-list-item>
+        <div *ngIf="isAdminPage">
+        <a id="add" *ngxPermissionsOnly="['ADD_PLACE']" (click)="addNewPlace()" mat-list-item>
             <mat-icon mat-list-avatar>
                 add_circle
             </mat-icon>
@@ -93,22 +96,23 @@
                 Utwórz nową miejscówkę
             </p>
         </a>
+    </div>
     </mat-nav-list>
 
     <mat-nav-list id="footer-list">
-        <a id="refresh" *ngIf="isHomePage" (click)="refresh()" mat-list-item>
+        <!-- <a id="refresh" *ngIf="isHomePage" (click)="refresh()" mat-list-item>
             <mat-icon mat-list-avatar>refresh</mat-icon>
             <h3 mat-line *ngIf="showFiller">
                 Odśwież dane
             </h3>
-        </a>
-        <a id="login" *ngIf="!isLogged" mat-list-item routerLink="/login">
+        </a> -->
+        <a id="login" *ngIf="!(authService.logged$ | async)" mat-list-item routerLink="/login">
             <mat-icon mat-list-avatar>login</mat-icon>
             <h3 mat-line *ngIf="showFiller">
                 Zaloguj się
             </h3>
         </a>
-        <a id="logout" *ngIf="isLogged" mat-list-item routerLink="/home">
+        <a id="logout" *ngIf="authService.logged$ | async" mat-list-item (click)="logout()">
             <mat-icon mat-list-avatar>logout</mat-icon>
             <h3 mat-line *ngIf="showFiller">
                 Wyloguj się

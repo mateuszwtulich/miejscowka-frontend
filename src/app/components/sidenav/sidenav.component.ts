@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
+import { NgxPermissionsService } from 'ngx-permissions';
 import { Subscription } from 'rxjs';
+import { ApplicationPermission } from 'src/app/model/ApplicationPermission';
+import { AuthenticationService } from 'src/app/security/authentication.service';
 import { SidenavService } from 'src/app/services/sidenav.service';
 import { AdministratorService } from '../../services/administrator.service';
 
@@ -23,7 +26,9 @@ export class SidenavComponent implements OnInit {
   constructor(
     private router: Router,
     private administratorService: AdministratorService,
-    private sidenavService: SidenavService
+    private sidenavService: SidenavService,
+    private permissionsService: NgxPermissionsService,
+    public authService: AuthenticationService
   ) { }
 
   ngOnInit(): void {
@@ -59,12 +64,15 @@ export class SidenavComponent implements OnInit {
     this.dispatchGlobalResizeEvent();
   }
 
-  navigate() {
-    if (this.isLogged) {
-
-    } else {
-      this.router.navigateByUrl("/login");
-    }
+  loadFavouritePlaces() {
+    this.permissionsService.hasPermission([ApplicationPermission.GET_FAVOURITE])
+      .then(hasPermission => {
+        if (hasPermission) {
+          this.sidenavService.favourite$.next();
+        } else {
+          this.router.navigateByUrl("/login");
+        }
+      })
   }
 
   navigateToAdminPage() {
@@ -75,6 +83,12 @@ export class SidenavComponent implements OnInit {
     setTimeout(() =>
         window.dispatchEvent(new Event('resize')),
       700);
+  }
+
+  logout() {
+    this.authService.logout();
+    this.sidenavService.logout$.next();
+    this.router.navigateByUrl("/login");
   }
 
   addNewPlace() {

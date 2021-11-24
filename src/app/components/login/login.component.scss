@@ -1,5 +1,16 @@
 @import "../../../variables.scss";
 
+.spinner-wrapper {
+    position: absolute !important;
+    z-index: 3;
+    width: 100% !important;
+    height: 100% !important;
+    background-color: rgba(0, 0, 0, 0.1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
 #login-container {
     display: flex;
     justify-content: center;
@@ -12,17 +23,6 @@
         margin: 25%, 25%, 25%, 25%;
         padding: 0 !important;
 
-        .spinner-wrapper {
-            position: absolute !important;
-            z-index: 3;
-            width: 100% !important;
-            height: 100% !important;
-            background-color: rgba(0, 0, 0, 0.1);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-    
         #login-title {
             display: flex;
             padding-left: 8%;

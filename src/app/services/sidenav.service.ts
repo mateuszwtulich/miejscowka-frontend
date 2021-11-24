@@ -8,6 +8,8 @@ export class SidenavService {
 
   sortBy$: EventEmitter<boolean> = new EventEmitter();
   refresh$: EventEmitter<any> = new EventEmitter();
+  favourite$: EventEmitter<any> = new EventEmitter();
+  logout$: EventEmitter<any> = new EventEmitter();
   constructor() { }
 
   sortByOccupancy(placesToSort: any, desc: boolean): PlaceCto[]{
