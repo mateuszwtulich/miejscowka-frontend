@@ -38,7 +38,6 @@ export class PlaceDetailsComponent implements OnInit {
    }
 
    onSelect(event: any) {
-    console.log(event);
   }
 
   ngOnInit(): void {

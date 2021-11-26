@@ -47,7 +47,6 @@ import { LocalStorageService } from '../components/cache/localStorage.service';
           this.localStorageService.setAuthInfo(this.localStorageService.parseHeaderToAuthInfo(decodedToken));
           this.localStorageService.setBasicAuthority();
           this.localStorageService.setIsRequestToServer(false);
-          console.log(this.localStorageService.getAuthorities())
           this.permissionsService.addPermission(this.localStorageService.getAuthorities() || '{}');
           this.spinnerDataSource.next(false);
           this.loggedDataSource.next(true);

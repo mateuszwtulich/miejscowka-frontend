@@ -51,5 +51,6 @@
   
   
 ::ng-deep .mat-dialog-container {
-    height: fit-content;
+    height: fit-content !important;
+    padding: 20px !important;
 }
