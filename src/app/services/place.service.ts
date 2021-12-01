@@ -149,6 +149,23 @@ export class PlaceService {
     )
   }
 
+  public findTrend(): Promise<any> {
+    // this.spinnerDataSource.next(true);
+    // this.http.get<PlaceCto[]>(`${RestServiceUrl.PLACE_ENDPOINT}`)
+    // .pipe(takeUntil(this.unsubscribe))
+    // .subscribe(
+    //   (places: PlaceCto[]) => {
+    //     this.spinnerDataSource.next(false);
+    //     this.placesData.next(places);
+    //   },
+    //   (e) => {
+    //     this.snackbar.open(e.error.message, 'ERROR', { duration: 5000 });
+    //     this.spinnerDataSource.next(false);
+    //   }
+    // )
+    return Promise.resolve();
+  }
+
   private updatePlaceData(placeId: number | undefined, placeCto: PlaceCto) {
     this.placesData.next(this.placesData.value.map(place => {
       if (place.id === placeId) {

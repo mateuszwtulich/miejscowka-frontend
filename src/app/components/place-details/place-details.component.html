@@ -21,11 +21,11 @@
                     </mat-card-content>
                     <mat-card-actions>
                         <mat-progress-bar mode="determinate" [value]="place.lastOccupancyTo?.percentageOccupancy"></mat-progress-bar>
-                        <p>{{ place.lastOccupancyTo?.percentageOccupancy }}%</p>
-                        <mat-icon mat-list-avatar *ngIf="place.favourite" (click)="toggleFavorite()">
+                        <p>{{ place.lastOccupancyTo?.percentageOccupancy ? place.lastOccupancyTo?.percentageOccupancy : 0 }}%</p>
+                        <mat-icon mat-list-avatar *ngIf="place.favourite" (click)="removeFromFavourites(place)">
                             favorite
                         </mat-icon>
-                        <mat-icon mat-list-avatar *ngIf="!place.favourite" (click)="toggleFavorite()">
+                        <mat-icon mat-list-avatar *ngIf="!place.favourite" (click)="addToFavourites(place)">
                             favorite_border
                         </mat-icon>
                     </mat-card-actions>
@@ -34,8 +34,8 @@
             <mat-grid-tile>
                 <mat-card class="mat-elevation-z2">
                     <mat-card-header>
-                        <!-- <mat-card-title class="warn">Zamknięte</mat-card-title> -->
-                        <mat-card-title class="positive">Otwarte</mat-card-title>
+                        <mat-card-title *ngIf="isClosed()" class="warn">Zamknięte</mat-card-title>
+                        <mat-card-title *ngIf="isOpen()" class="positive">Otwarte</mat-card-title>
                       </mat-card-header>
                       <mat-card-content>
                           <div id="opening-hours">
@@ -44,47 +44,47 @@
                               </p>
                               <div class="day-of-week">
                                   <p>poniedziałek:</p>
-                                  <p>16:00 - 01:00</p>
+                                  <p>{{place.openingHoursTo?.mondayOpeningHour}} - {{place.openingHoursTo?.mondayClosingHour}}</p>
                               </div>
                               <div class="day-of-week">
                                   <p>wtorek:</p>
-                                  <p>16:00 - 01:00</p>
+                                  <p>{{place.openingHoursTo?.tuesdayOpeningHour}} - {{place.openingHoursTo?.tuesdayClosingHour}}</p>
                               </div>
                               <div class="day-of-week">
                                   <p>środa:</p>
-                                  <p>16:00 - 01:00</p>
+                                  <p>{{place.openingHoursTo?.wednesdayOpeningHour}} - {{place.openingHoursTo?.wednesdayClosingHour}}</p>
                               </div>
                               <div class="day-of-week">
                                   <p>czwartek:</p>
-                                  <p>16:00 - 02:00</p>
+                                  <p>{{place.openingHoursTo?.thursdayOpeningHour}} - {{place.openingHoursTo?.thursdayClosingHour}}</p>
                               </div>
                               <div class="day-of-week">
                                   <p>piątek:</p>
-                                  <p>16:00 - 03:00</p>
+                                  <p>{{place.openingHoursTo?.fridayOpeningHour}} - {{place.openingHoursTo?.fridayClosingHour}}</p>
                               </div>
                               <div class="day-of-week">
                                   <p>sobota:</p>
-                                  <p>16:00 - 03:00</p>
+                                  <p>{{place.openingHoursTo?.saturdayOpeningHour}} - {{place.openingHoursTo?.saturdayClosingHour}}</p>
                               </div>
                               <div class="day-of-week">
                                   <p>niedziela:</p>
-                                  <p>16:00 - 01:00</p>
+                                  <p>{{place.openingHoursTo?.sundayOpeningHour}} - {{place.openingHoursTo?.sundayClosingHour}}</p>
                               </div>
                           </div>
                        
                       </mat-card-content>
                       <mat-card-header>
-                        <mat-card-title class="warn trend" *ngIf="true">Prognozowany wzrost
+                        <mat-card-title class="warn trend" *ngIf="trendingUp">Prognozowany wzrost
                             <mat-icon mat-list-avatar>
                                 trending_up
                             </mat-icon>
                         </mat-card-title>
-                        <mat-card-title class="positive trend" *ngIf="false">Prognozowany spadek
+                        <mat-card-title class="positive trend" *ngIf="trendingDown">Prognozowany spadek
                             <mat-icon mat-list-avatar>
                                 trending_down
                             </mat-icon>
                         </mat-card-title>
-                        <mat-card-title class="trend" *ngIf="false">Prognozowana stabilizacja
+                        <mat-card-title class="trend" *ngIf="trendingFlat">Prognozowana stabilizacja
                             <mat-icon mat-list-avatar>
                                 trending_flat
                             </mat-icon>

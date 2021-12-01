@@ -35,20 +35,20 @@ export class ModifyPlaceComponent implements OnInit {
         buildingNumber: [this.data.placeCto.buildingNumber, Validators.required],
         apartmentNumber: [this.data.placeCto.apartmentNumber],
         imageUrl: [this.data.placeCto.imageUrl, Validators.required],
-        mondayFrom: [new Date(), Validators.required],
-        mondayTo: [new Date(), Validators.required],
-        tuesdayFrom: [new Date(), Validators.required],
-        tuesdayTo: [new Date(), Validators.required],
-        wednesdayFrom: [new Date(), Validators.required],
-        wednesdayTo: [new Date(), Validators.required],
-        thursdayFrom: [new Date(), Validators.required],
-        thursdayTo: [new Date(), Validators.required],
-        fridayFrom: [new Date(), Validators.required],
-        fridayTo: [new Date(), Validators.required],
-        saturdayFrom: [new Date(), Validators.required],
-        saturdayTo: [new Date(), Validators.required],
-        sundayFrom: [new Date(), Validators.required],
-        sundayTo: [new Date(), Validators.required],
+        mondayFrom: [this.getMondayOpeningHour(), Validators.required],
+        mondayTo: [this.getMondayClosingHour(), Validators.required],
+        tuesdayFrom: [this.getTuesdayOpeningHour(), Validators.required],
+        tuesdayTo: [this.getTuesdayClosingHour(), Validators.required],
+        wednesdayFrom: [this.getWednesdayOpeningHour(), Validators.required],
+        wednesdayTo: [this.getWednesdayClosingHour(), Validators.required],
+        thursdayFrom: [this.getThursdayOpeningHour(), Validators.required],
+        thursdayTo: [this.getThursdayClosingHour(), Validators.required],
+        fridayFrom: [this.getFridayOpeningHour(), Validators.required],
+        fridayTo: [this.getFridayClosingHour(), Validators.required],
+        saturdayFrom: [this.getSaturdayOpeningHour(), Validators.required],
+        saturdayTo: [this.getSaturdayClosingHour(), Validators.required],
+        sundayFrom: [this.getSundayOpeningHour(), Validators.required],
+        sundayTo: [this.getSundayClosingHour(), Validators.required],
       });
     }
   ngOnInit(): void {
@@ -83,26 +83,124 @@ export class ModifyPlaceComponent implements OnInit {
         categoryId: this.placeForm.controls["category"].value.id,
         imageUrl: this.placeForm.controls["imageUrl"].value,
         openingHoursTo: {
-          mondayOpeningHour: this.placeForm.controls["mondayFrom"].value.getTime().toString(),
-          mondayClosingHour: this.placeForm.controls["mondayTo"].value.getTime().toString(),
-          tuesdayOpeningHour: this.placeForm.controls["tuesdayFrom"].value.getTime().toString(),
-          tuesdayClosingHour: this.placeForm.controls["tuesdayTo"].value.getTime().toString(),
-          wednesdayOpeningHour: this.placeForm.controls["wednesdayFrom"].value.getTime().toString(),
-          wednesdayClosingHour: this.placeForm.controls["wednesdayTo"].value.getTime().toString(),
-          thursdayOpeningHour: this.placeForm.controls["thursdayFrom"].value.getTime().toString(),
-          thursdayClosingHour: this.placeForm.controls["thursdayTo"].value.getTime().toString(),
-          fridayOpeningHour: this.placeForm.controls["fridayFrom"].value.getTime().toString(),
-          fridayClosingHour: this.placeForm.controls["fridayTo"].value.getTime().toString(),
-          saturdayOpeningHour: this.placeForm.controls["saturdayFrom"].value.getTime().toString(),
-          saturdayClosingHour: this.placeForm.controls["saturdayTo"].value.getTime().toString(),
-          sundayOpeningHour: this.placeForm.controls["sundayFrom"].value.getTime().toString(),
-          sundayClosingHour: this.placeForm.controls["sundayTo"].value.getTime().toString(),
+          mondayOpeningHour: ('0' + this.placeForm.controls["mondayFrom"].value.getHours().toString()).slice(-2) + ':' + ('0' + this.placeForm.controls["mondayFrom"].value.getMinutes().toString()).slice(-2),
+          mondayClosingHour: ('0' + this.placeForm.controls["mondayTo"].value.getHours().toString()).slice(-2) + ':' + ('0' + this.placeForm.controls["mondayTo"].value.getMinutes().toString()).slice(-2),
+          tuesdayOpeningHour: ('0' + this.placeForm.controls["tuesdayFrom"].value.getHours().toString()).slice(-2) + ':' + ('0' + this.placeForm.controls["tuesdayFrom"].value.getMinutes().toString()).slice(-2),
+          tuesdayClosingHour: ('0' + this.placeForm.controls["tuesdayTo"].value.getHours().toString()).slice(-2) + ':' + ('0' + this.placeForm.controls["tuesdayTo"].value.getMinutes().toString()).slice(-2),
+          wednesdayOpeningHour: ('0' + this.placeForm.controls["wednesdayFrom"].value.getHours().toString()).slice(-2) + ':' + ('0' + this.placeForm.controls["wednesdayFrom"].value.getMinutes().toString()).slice(-2),
+          wednesdayClosingHour: ('0' + this.placeForm.controls["wednesdayTo"].value.getHours().toString()).slice(-2) + ':' + ('0' + this.placeForm.controls["wednesdayTo"].value.getMinutes().toString()).slice(-2),
+          thursdayOpeningHour: ('0' + this.placeForm.controls["thursdayFrom"].value.getHours().toString()).slice(-2) + ':' + ('0' + this.placeForm.controls["thursdayFrom"].value.getMinutes().toString()).slice(-2),
+          thursdayClosingHour: ('0' + this.placeForm.controls["thursdayTo"].value.getHours().toString()).slice(-2) + ':' + ('0' + this.placeForm.controls["thursdayTo"].value.getMinutes().toString()).slice(-2),
+          fridayOpeningHour: ('0' + this.placeForm.controls["fridayFrom"].value.getHours().toString()).slice(-2) + ':' + ('0' + this.placeForm.controls["fridayFrom"].value.getMinutes().toString()).slice(-2),
+          fridayClosingHour: ('0' + this.placeForm.controls["fridayTo"].value.getHours().toString()).slice(-2) + ':' + ('0' + this.placeForm.controls["fridayTo"].value.getMinutes().toString()).slice(-2),
+          saturdayOpeningHour: ('0' + this.placeForm.controls["saturdayFrom"].value.getHours().toString()).slice(-2) + ':' + ('0' + this.placeForm.controls["saturdayFrom"].value.getMinutes().toString()).slice(-2),
+          saturdayClosingHour: ('0' + this.placeForm.controls["saturdayTo"].value.getHours().toString()).slice(-2) + ':' + ('0' + this.placeForm.controls["saturdayTo"].value.getMinutes().toString()).slice(-2),
+          sundayOpeningHour: ('0' + this.placeForm.controls["sundayFrom"].value.getHours().toString()).slice(-2) + ':' + ('0' + this.placeForm.controls["sundayFrom"].value.getMinutes().toString()).slice(-2),
+          sundayClosingHour: ('0' + this.placeForm.controls["sundayTo"].value.getHours().toString()).slice(-2) + ':' + ('0' + this.placeForm.controls["sundayTo"].value.getMinutes().toString()).slice(-2),
         } as OpeningHoursTo
       } as PlaceTo
 
       this.placeService.updatePlace(placeTo, this.data.placeCto.id);
       this.dialogRef.close();
     }
+  }
+
+  getMondayOpeningHour() {
+    const date = new Date();
+    date.setHours(this.data.placeCto.openingHoursTo.mondayOpeningHour.split(':')[0]);
+    date.setMinutes(this.data.placeCto.openingHoursTo.mondayOpeningHour.split(':')[1]);
+    return date;
+  }
+
+  getMondayClosingHour() {
+    const date = new Date();
+    date.setHours(this.data.placeCto.openingHoursTo.mondayClosingHour.split(':')[0]);
+    date.setMinutes(this.data.placeCto.openingHoursTo.mondayClosingHour.split(':')[1]);
+    return date;
+  }
+
+  getTuesdayOpeningHour() {
+    const date = new Date();
+    date.setHours(this.data.placeCto.openingHoursTo.tuesdayOpeningHour.split(':')[0]);
+    date.setMinutes(this.data.placeCto.openingHoursTo.tuesdayOpeningHour.split(':')[1]);
+    return date;
+  }
+
+  getTuesdayClosingHour() {
+    const date = new Date();
+    date.setHours(this.data.placeCto.openingHoursTo.tuesdayClosingHour.split(':')[0]);
+    date.setMinutes(this.data.placeCto.openingHoursTo.tuesdayClosingHour.split(':')[1]);
+    return date;
+  }
+
+  getWednesdayOpeningHour() {
+    const date = new Date();
+    date.setHours(this.data.placeCto.openingHoursTo.wednesdayOpeningHour.split(':')[0]);
+    date.setMinutes(this.data.placeCto.openingHoursTo.wednesdayOpeningHour.split(':')[1]);
+    return date;
+  }
+
+  getWednesdayClosingHour() {
+    const date = new Date();
+    date.setHours(this.data.placeCto.openingHoursTo.wednesdayClosingHour.split(':')[0]);
+    date.setMinutes(this.data.placeCto.openingHoursTo.wednesdayClosingHour.split(':')[1]);
+    return date;
+  }
+
+  getThursdayOpeningHour() {
+    const date = new Date();
+    date.setHours(this.data.placeCto.openingHoursTo.thursdayOpeningHour.split(':')[0]);
+    date.setMinutes(this.data.placeCto.openingHoursTo.thursdayOpeningHour.split(':')[1]);
+    return date;
+  }
+
+  getThursdayClosingHour() {
+    const date = new Date();
+    date.setHours(this.data.placeCto.openingHoursTo.thursdayClosingHour.split(':')[0]);
+    date.setMinutes(this.data.placeCto.openingHoursTo.thursdayClosingHour.split(':')[1]);
+    return date;
+  }
+
+  getFridayOpeningHour() {
+    const date = new Date();
+    date.setHours(this.data.placeCto.openingHoursTo.fridayOpeningHour.split(':')[0]);
+    date.setMinutes(this.data.placeCto.openingHoursTo.fridayOpeningHour.split(':')[1]);
+    return date;
+  }
+
+  getFridayClosingHour() {
+    const date = new Date();
+    date.setHours(this.data.placeCto.openingHoursTo.fridayClosingHour.split(':')[0]);
+    date.setMinutes(this.data.placeCto.openingHoursTo.fridayClosingHour.split(':')[1]);
+    return date;
+  }
+
+  getSaturdayOpeningHour() {
+    const date = new Date();
+    date.setHours(this.data.placeCto.openingHoursTo.saturdayOpeningHour.split(':')[0]);
+    date.setMinutes(this.data.placeCto.openingHoursTo.saturdayOpeningHour.split(':')[1]);
+    return date;
+  }
+
+  getSaturdayClosingHour() {
+    const date = new Date();
+    date.setHours(this.data.placeCto.openingHoursTo.saturdayClosingHour.split(':')[0]);
+    date.setMinutes(this.data.placeCto.openingHoursTo.saturdayClosingHour.split(':')[1]);
+    return date;
+  }
+
+  getSundayOpeningHour() {
+    const date = new Date();
+    date.setHours(this.data.placeCto.openingHoursTo.sundayOpeningHour.split(':')[0]);
+    date.setMinutes(this.data.placeCto.openingHoursTo.sundayOpeningHour.split(':')[1]);
+    return date;
+  }
+
+  getSundayClosingHour() {
+    const date = new Date();
+    date.setHours(this.data.placeCto.openingHoursTo.sundayClosingHour.split(':')[0]);
+    date.setMinutes(this.data.placeCto.openingHoursTo.sundayClosingHour.split(':')[1]);
+    return date;
   }
 
   closeDialog() {

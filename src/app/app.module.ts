@@ -115,7 +115,8 @@ import { TokenInterceptor } from './security/tokenInterceptor';
     NgxMatNativeDateModule,
     MatPaginatorModule,
     MatSnackBarModule,
-    NgxPermissionsModule
+    NgxPermissionsModule,
+    PlaceDetailsComponent
   ]
 })
 export class AppModule { }
