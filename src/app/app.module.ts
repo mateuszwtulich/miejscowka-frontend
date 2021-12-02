@@ -36,6 +36,7 @@ import { MatSnackBarConfig, MatSnackBarModule, MAT_SNACK_BAR_DEFAULT_OPTIONS } f
 import {HttpBackend, HttpClient, HttpClientModule, HttpHandler, HTTP_INTERCEPTORS} from '@angular/common/http';
 import { NgxPermissionsModule } from 'ngx-permissions';
 import { TokenInterceptor } from './security/tokenInterceptor';
+import { DragDropDirective } from './directive/drag-drop.directive';
 
 @NgModule({
   declarations: [
@@ -50,6 +51,7 @@ import { TokenInterceptor } from './security/tokenInterceptor';
     AddPlaceComponent,
     ModifyPlaceComponent,
     DeletePlaceComponent,
+    DragDropDirective
   ],
   imports: [
     BrowserModule,

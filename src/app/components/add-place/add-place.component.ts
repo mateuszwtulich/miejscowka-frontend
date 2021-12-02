@@ -1,9 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef } from '@angular/material/dialog';
+import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { OpeningHoursTo } from 'src/app/model/OpeningHoursTo';
 import { PlaceTo } from 'src/app/model/PlaceTo';
 import { CategoryService } from 'src/app/services/category.service';
+import { ImgurService } from 'src/app/services/imgur.service';
 import { PlaceService } from 'src/app/services/place.service';
 
 @Component({
@@ -14,11 +16,14 @@ import { PlaceService } from 'src/app/services/place.service';
 export class AddPlaceComponent implements OnInit {
 
   placeForm: FormGroup;
+  files: File[] = [];
 
   constructor(
     private _formBuilder: FormBuilder,
     public categoryService: CategoryService,
+    private imgurService: ImgurService,
     private placeService: PlaceService,
+    private sanitizer: DomSanitizer,
     public dialogRef: MatDialogRef<AddPlaceComponent>){
       this.placeForm = this._formBuilder.group({
         name: ['', Validators.required],
@@ -53,8 +58,19 @@ export class AddPlaceComponent implements OnInit {
     this.categoryService.findAllCategories();
   }
 
+  uploadFile(event: Event) {
+    const files = (event.target as HTMLInputElement).files as FileList;
+    for (let index = 0; index < files.length; index++) {
+      const element = files[index];
+      this.files.push(element)
+    }
+  }
+
   addPlace() {
     if (this.placeForm.valid) {
+      this.imgurService.addImage(this.files[0]).subscribe(
+        (data: any) => {
+          console.log(data);
       const placeTo = {
         name: this.placeForm.controls["name"].value,
         capacity: this.placeForm.controls["capacity"].value,
@@ -84,6 +100,7 @@ export class AddPlaceComponent implements OnInit {
 
       this.placeService.addPlace(placeTo);
       this.dialogRef.close();
+    });
     }
   }
 

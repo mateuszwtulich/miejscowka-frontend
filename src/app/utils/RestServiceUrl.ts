@@ -12,4 +12,7 @@ export class RestServiceUrl {
     public static USER_SIGN_UP_ENDPOINT: string = RestServiceUrl.BACKEND_URL + 'user/signup';
 
     public static AUTHORIZE: string = RestServiceUrl.BACKEND_URL + 'api/authenticate';
+
+    public static IMGUR: string = 'https://api.imgur.com/3/image';
+
 }

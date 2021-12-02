@@ -48,6 +48,18 @@
           }
         }
 
+        .uploadfilecontainer {
+          background-image: url("../../../assets/cloud-2044823_960_720.png");
+          background-repeat: no-repeat;
+          background-size: 100px;
+          background-position: center;
+          height: 200px;
+          width: 80%;
+          margin: 20px auto;
+          border: 2px dashed #12c0ef;
+          border-radius: 10px;
+      }
+
         .address-table {
           width: 100%;
           ::ng-deep .mat-form-field-wrapper {

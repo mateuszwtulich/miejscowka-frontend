@@ -51,6 +51,9 @@
 
             </tr></table>
 
+            <div class="uploadfilecontainer" (click)="fileInput.click()" appDragDrop (onFileDropped)="uploadFile($event)">
+                <input hidden type="file" #fileInput (change)="uploadFile($event)">
+              </div>
             <table class="example-full-width" cellspacing="0"><tr>
                 <td class="day-of-week">
                     <div class="one-line">

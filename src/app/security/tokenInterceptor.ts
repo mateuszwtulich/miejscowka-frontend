@@ -1,6 +1,6 @@
 import { HttpEvent, HttpHandler, HttpInterceptor, HttpRequest } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { LocalStorageService } from '../components/cache/localStorage.service';
 import { ApplicationPermission } from '../model/ApplicationPermission';
 
@@ -11,6 +11,7 @@ export class TokenInterceptor implements HttpInterceptor {
     }
 
     intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
+        if (!request.url.includes('imgur')) {
         let jsonRequest: HttpRequest<any> | null = null;
         if (!this.localStorageService.getIsRequestToServer()) {
 
@@ -43,6 +44,8 @@ export class TokenInterceptor implements HttpInterceptor {
             });
         }
         return next.handle(jsonRequest);
+    }
+        return next.handle(request);
     }
 }
 
