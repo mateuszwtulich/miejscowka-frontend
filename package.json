@@ -3,8 +3,8 @@
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve",
-    "build": "ng build",
+    "start": "node server.js",
+    "build": "ng build --aot --prod",
     "watch": "ng build --watch --configuration development",
     "test": "ng test"
   },
@@ -14,7 +14,9 @@
     "@angular/animations": "~12.2.0",
     "@angular/cdk": "^12.2.11",
     "@angular/common": "~12.2.0",
+    "@angular/cli": "~12.2.0",
     "@angular/compiler": "~12.2.0",
+    "@angular/compiler-cli": "~12.2.0",
     "@angular/core": "~12.2.0",
     "@angular/forms": "~12.2.0",
     "@angular/material": "^12.2.11",
@@ -23,12 +25,14 @@
     "@angular/router": "~12.2.0",
     "@swimlane/ngx-charts": "^19.0.1",
     "d3-scale": "^4.0.2",
+    "express": "^4.17.1",
     "jwt-decode": "^3.1.2",
     "moment": "^2.29.1",
     "ngx-permissions": "^8.1.1",
     "rxjs": "~6.6.0",
     "tslib": "^2.3.0",
-    "zone.js": "~0.11.4"
+    "zone.js": "~0.11.4",
+    "typescript": "~4.3.5"
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "~12.2.11",
@@ -44,5 +48,9 @@
     "karma-jasmine": "~4.0.0",
     "karma-jasmine-html-reporter": "~1.7.0",
     "typescript": "~4.3.5"
+  },
+  "engines": {
+    "node": "12.19.0",
+    "npm": "6.14.8"
   }
 }
