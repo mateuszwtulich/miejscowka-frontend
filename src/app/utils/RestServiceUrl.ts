@@ -1,5 +1,5 @@
 export class RestServiceUrl {
-    public static BACKEND_URL: string = 'http://localhost:8080/';
+    public static BACKEND_URL: string = 'https://miejscowka-backend.herokuapp.com/';
 
     public static PLACE_ENDPOINT: string = RestServiceUrl.BACKEND_URL + 'place';
 
