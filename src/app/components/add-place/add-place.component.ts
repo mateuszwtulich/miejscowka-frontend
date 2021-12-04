@@ -66,11 +66,14 @@ export class AddPlaceComponent implements OnInit {
     }
   }
 
+  deleteAttachment(index: number) {
+    this.files.splice(index, 1);
+  }
+
   addPlace() {
-    if (this.placeForm.valid) {
+    if (this.placeForm.valid && this.files[0]) {
       this.imgurService.addImage(this.files[0]).subscribe(
         (data: any) => {
-          console.log(data);
       const placeTo = {
         name: this.placeForm.controls["name"].value,
         capacity: this.placeForm.controls["capacity"].value,
@@ -79,7 +82,7 @@ export class AddPlaceComponent implements OnInit {
         buildingNumber: this.placeForm.controls["buildingNumber"].value,
         apartmentNumber: this.placeForm.controls["apartmentNumber"].value,
         categoryId: this.placeForm.controls["category"].value.id,
-        imageUrl: this.placeForm.controls["imageUrl"].value,
+        imageUrl: data.link,
         openingHoursTo: {
           mondayOpeningHour: ('0' + this.placeForm.controls["mondayFrom"].value.getHours().toString()).slice(-2) + ':' + ('0' + this.placeForm.controls["mondayFrom"].value.getMinutes().toString()).slice(-2),
           mondayClosingHour: ('0' + this.placeForm.controls["mondayTo"].value.getHours().toString()).slice(-2) + ':' + ('0' + this.placeForm.controls["mondayTo"].value.getMinutes().toString()).slice(-2),

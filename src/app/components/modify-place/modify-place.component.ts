@@ -7,6 +7,7 @@ import { CategoryEto } from 'src/app/model/CategoryEto';
 import { OpeningHoursTo } from 'src/app/model/OpeningHoursTo';
 import { PlaceTo } from 'src/app/model/PlaceTo';
 import { CategoryService } from 'src/app/services/category.service';
+import { ImgurService } from 'src/app/services/imgur.service';
 import { PlaceService } from 'src/app/services/place.service';
 
 @Component({
@@ -19,12 +20,14 @@ export class ModifyPlaceComponent implements OnInit {
   placeForm: FormGroup;
   private readonly unsubscribe = new Subject();
   categories: CategoryEto[] | undefined;
+  files: File[] = [];
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: any,
     private _formBuilder: FormBuilder,
     public categoryService: CategoryService,
     private placeService: PlaceService,
+    private imgurService: ImgurService,
     public dialogRef: MatDialogRef<ModifyPlaceComponent>){
       this.placeForm = this._formBuilder.group({
         name: [this.data.placeCto.name, Validators.required],
@@ -53,6 +56,7 @@ export class ModifyPlaceComponent implements OnInit {
     }
   ngOnInit(): void {
     this.loadCategories();
+    this.files.push(new File([new Blob()], this.data.placeCto.imageUrl))
   }
 
   private loadCategories() {
@@ -66,13 +70,27 @@ export class ModifyPlaceComponent implements OnInit {
       });
   }
 
+  uploadFile(event: Event) {
+    const files = (event.target as HTMLInputElement).files as FileList;
+    for (let index = 0; index < files.length; index++) {
+      const element = files[index];
+      this.files.push(element)
+    }
+  }
+
+  deleteAttachment(index: number) {
+    this.files.splice(index, 1);
+  }
+
   private uploadCategory() {
     this.placeForm.controls['category']
       .patchValue((this.categories as CategoryEto[]).find(category => category.name === this.data.placeCto.categoryName));
   }
 
   updatePlace() {
-    if (this.placeForm.valid) {
+    if (this.placeForm.valid && this.files[0]) {
+      this.imgurService.addImage(this.files[0]).subscribe(
+        (data: any) => {
       const placeTo = {
         name: this.placeForm.controls["name"].value,
         capacity: this.placeForm.controls["capacity"].value,
@@ -81,7 +99,7 @@ export class ModifyPlaceComponent implements OnInit {
         buildingNumber: this.placeForm.controls["buildingNumber"].value,
         apartmentNumber: this.placeForm.controls["apartmentNumber"].value,
         categoryId: this.placeForm.controls["category"].value.id,
-        imageUrl: this.placeForm.controls["imageUrl"].value,
+        imageUrl: data.link,
         openingHoursTo: {
           mondayOpeningHour: ('0' + this.placeForm.controls["mondayFrom"].value.getHours().toString()).slice(-2) + ':' + ('0' + this.placeForm.controls["mondayFrom"].value.getMinutes().toString()).slice(-2),
           mondayClosingHour: ('0' + this.placeForm.controls["mondayTo"].value.getHours().toString()).slice(-2) + ':' + ('0' + this.placeForm.controls["mondayTo"].value.getMinutes().toString()).slice(-2),
@@ -102,6 +120,7 @@ export class ModifyPlaceComponent implements OnInit {
 
       this.placeService.updatePlace(placeTo, this.data.placeCto.id);
       this.dialogRef.close();
+    });
     }
   }
 

@@ -13,6 +13,6 @@ export class RestServiceUrl {
 
     public static AUTHORIZE: string = RestServiceUrl.BACKEND_URL + 'api/authenticate';
 
-    public static IMGUR: string = 'https://api.imgur.com/3/image';
+    public static IMGUR: string = 'https://api.imgur.com/3/upload';
 
 }

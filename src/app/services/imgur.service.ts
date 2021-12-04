@@ -12,7 +12,7 @@ export class ImgurService {
 
   httpOptions = {
     headers: new HttpHeaders({
-      'Authorization': 'Client-ID 546c25a59c58ad7'
+      'authorization': 'Client-ID 1022d0cd76335f8'
     })
   };
 
