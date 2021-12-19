@@ -140,7 +140,7 @@ export class PlaceDetailsComponent implements OnInit {
     else if (dayOfWeek == 6) {
       return this.place.openingHoursTo?.saturdayOpeningHour;
     }
-    else if (dayOfWeek == 7) {
+    else if (dayOfWeek == 0) {
       return this.place.openingHoursTo?.sundayOpeningHour;
     }
   }
@@ -166,7 +166,7 @@ export class PlaceDetailsComponent implements OnInit {
     else if (dayOfWeek == 6) {
       return this.place.openingHoursTo?.saturdayClosingHour;
     }
-    else if (dayOfWeek == 7) {
+    else if (dayOfWeek == 0) {
       return this.place.openingHoursTo?.sundayClosingHour;
     }
   } 
