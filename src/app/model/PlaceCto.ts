@@ -12,6 +12,8 @@ export class PlaceCto {
     categoryName: string | undefined;
     lastOccupancyTo: OccupancyTo | undefined;
     favourite: boolean | undefined;
+    imageName: string | undefined;
     imageUrl: string | undefined;
+    imageBase64: string | undefined;
     openingHoursTo: OpeningHoursTo | undefined;
 }
