@@ -5,7 +5,6 @@ import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { OpeningHoursTo } from 'src/app/model/OpeningHoursTo';
 import { PlaceTo } from 'src/app/model/PlaceTo';
 import { CategoryService } from 'src/app/services/category.service';
-import { ImgurService } from 'src/app/services/imgur.service';
 import { PlaceService } from 'src/app/services/place.service';
 
 @Component({
@@ -17,11 +16,12 @@ export class AddPlaceComponent implements OnInit {
 
   placeForm: FormGroup;
   files: File[] = [];
+  base64image: string | undefined;
+  imageName: string | undefined;
 
   constructor(
     private _formBuilder: FormBuilder,
     public categoryService: CategoryService,
-    private imgurService: ImgurService,
     private placeService: PlaceService,
     private sanitizer: DomSanitizer,
     public dialogRef: MatDialogRef<AddPlaceComponent>){
@@ -33,7 +33,6 @@ export class AddPlaceComponent implements OnInit {
         street: ['', Validators.required],
         buildingNumber: ['', Validators.required],
         apartmentNumber: [''],
-        imageUrl: ['test', Validators.required],
         mondayFrom: [new Date(), Validators.required],
         mondayTo: [new Date(), Validators.required],
         tuesdayFrom: [new Date(), Validators.required],
@@ -60,10 +59,14 @@ export class AddPlaceComponent implements OnInit {
 
   uploadFile(event: Event) {
     const files = (event.target as HTMLInputElement).files as FileList;
-    for (let index = 0; index < files.length; index++) {
-      const element = files[index];
-      this.files.push(element)
-    }
+    this.files.push(files[0]);
+    var reader = new FileReader();
+    reader.readAsDataURL(files[0]);
+    this.imageName = files[0].name;
+
+    reader.onload = (e) => {
+      this.base64image = reader?.result?.toString().split("base64,")[1];
+    };
   }
 
   deleteAttachment(index: number) {
@@ -72,8 +75,6 @@ export class AddPlaceComponent implements OnInit {
 
   addPlace() {
     if (this.placeForm.valid && this.files[0]) {
-      this.imgurService.addImage(this.files[0]).subscribe(
-        (data: any) => {
       const placeTo = {
         name: this.placeForm.controls["name"].value,
         capacity: this.placeForm.controls["capacity"].value,
@@ -82,7 +83,8 @@ export class AddPlaceComponent implements OnInit {
         buildingNumber: this.placeForm.controls["buildingNumber"].value,
         apartmentNumber: this.placeForm.controls["apartmentNumber"].value,
         categoryId: this.placeForm.controls["category"].value.id,
-        imageUrl: data.link,
+        imageName: this.imageName,
+        base64Image: this.base64image,
         openingHoursTo: {
           mondayOpeningHour: ('0' + this.placeForm.controls["mondayFrom"].value.getHours().toString()).slice(-2) + ':' + ('0' + this.placeForm.controls["mondayFrom"].value.getMinutes().toString()).slice(-2),
           mondayClosingHour: ('0' + this.placeForm.controls["mondayTo"].value.getHours().toString()).slice(-2) + ':' + ('0' + this.placeForm.controls["mondayTo"].value.getMinutes().toString()).slice(-2),
@@ -103,7 +105,6 @@ export class AddPlaceComponent implements OnInit {
 
       this.placeService.addPlace(placeTo);
       this.dialogRef.close();
-    });
     }
   }
 
