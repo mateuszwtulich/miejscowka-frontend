@@ -7,7 +7,7 @@
                 matInput 
                 (keyup)="applyFilter($event)"
                 formControlName="placeName">
-              <mat-icon matSuffix>search</mat-icon>
+              <mat-icon matSuffix svgIcon="search"></mat-icon>
             </mat-form-field>
           </p>
           <p>
@@ -69,10 +69,10 @@
             <div>
               <div>
                 <button *ngxPermissionsOnly="['EDIT_PLACE']" mat-icon-button color="primary" (click)="modifyPlace(element)">
-                  <mat-icon>edit</mat-icon>
+                  <mat-icon svgIcon="edit"></mat-icon>
                 </button>
                 <button *ngxPermissionsOnly="['DELETE_PLACE']" mat-icon-button color="warn" (click)="deletePlace(element)">
-                  <mat-icon>delete</mat-icon>
+                  <mat-icon svgIcon="delete"></mat-icon>
                 </button>
               </div>
             </div>
