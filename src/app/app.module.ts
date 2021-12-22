@@ -37,6 +37,7 @@ import {HttpBackend, HttpClient, HttpClientModule, HttpHandler, HTTP_INTERCEPTOR
 import { NgxPermissionsModule } from 'ngx-permissions';
 import { TokenInterceptor } from './security/tokenInterceptor';
 import { DragDropDirective } from './directive/drag-drop.directive';
+import { LazyImgDirective } from './directive/lazy-img.directive';
 
 @NgModule({
   declarations: [
@@ -51,7 +52,8 @@ import { DragDropDirective } from './directive/drag-drop.directive';
     AddPlaceComponent,
     ModifyPlaceComponent,
     DeletePlaceComponent,
-    DragDropDirective
+    DragDropDirective,
+    LazyImgDirective
   ],
   imports: [
     BrowserModule,
