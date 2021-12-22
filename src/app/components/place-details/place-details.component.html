@@ -4,7 +4,7 @@
 <div id="place-details-container" class="dialog-responsive">
     <div id="modal-top">
         <button id="close" mat-icon-button (click)="closeDialog()">
-            <mat-icon class="material-icons" svgIcon="close"></mat-icon>
+            <mat-icon class="material-icons">close</mat-icon>
         </button>
     </div>
     <div id="content">
@@ -22,9 +22,11 @@
                     <mat-card-actions>
                         <mat-progress-bar mode="determinate" [value]="place.lastOccupancyTo?.percentageOccupancy"></mat-progress-bar>
                         <p>{{ place.lastOccupancyTo?.percentageOccupancy ? place.lastOccupancyTo?.percentageOccupancy : 0 }}%</p>
-                        <mat-icon mat-list-avatar *ngIf="place.favourite" (click)="removeFromFavourites(place)" svgIcon="favorite">
+                        <mat-icon mat-list-avatar *ngIf="place.favourite" (click)="removeFromFavourites(place)">
+                            favorite
                         </mat-icon>
-                        <mat-icon mat-list-avatar *ngIf="!place.favourite" (click)="addToFavourites(place)" svgIcon="favorite_border">
+                        <mat-icon mat-list-avatar *ngIf="!place.favourite" (click)="addToFavourites(place)">
+                            favorite_border
                         </mat-icon>
                     </mat-card-actions>
                 </mat-card>
@@ -73,15 +75,18 @@
                       </mat-card-content>
                       <mat-card-header>
                         <mat-card-title class="warn trend" *ngIf="trendingUp">Prognozowany wzrost
-                            <mat-icon mat-list-avatar svgIcon="trending_up">
+                            <mat-icon mat-list-avatar>
+                                trending_up
                             </mat-icon>
                         </mat-card-title>
                         <mat-card-title class="positive trend" *ngIf="trendingDown">Prognozowany spadek
-                            <mat-icon mat-list-avatar svgIcon="trending_down">
+                            <mat-icon mat-list-avatar>
+                                trending_down
                             </mat-icon>
                         </mat-card-title>
                         <mat-card-title class="trend" *ngIf="trendingFlat">Prognozowana stabilizacja
-                            <mat-icon mat-list-avatar svgIcon="trending_flat">
+                            <mat-icon mat-list-avatar>
+                                trending_flat
                             </mat-icon>
                         </mat-card-title>
                       </mat-card-header>
