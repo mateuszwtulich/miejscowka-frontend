@@ -5,7 +5,8 @@
     <mat-nav-list td-sidenav-content id="side-nav">
         <div class="header">
             <button mat-icon-button (click)="onToggle()" class="burger-menu-button">
-                <mat-icon mat-list-avatar svgIcon="menu">
+                <mat-icon mat-list-avatar>
+                    menu
                 </mat-icon>
             </button>
             <h3 mat-line *ngIf="showFiller">
@@ -16,7 +17,8 @@
         </div>
         <mat-divider></mat-divider>
         <a id="search" *ngIf="isHomePage" (click)="refresh()" mat-list-item>
-            <mat-icon mat-list-avatar svgIcon="all_inclusive">
+            <mat-icon mat-list-avatar>
+                all_inclusive
             </mat-icon>
             <h3 mat-line *ngIf="showFiller">
                 Wszystkie miejscówki
@@ -26,7 +28,8 @@
             </p>
         </a>
         <a id="trending_down" *ngIf="isHomePage" (click)="sortPlacesDesc()" mat-list-item>
-            <mat-icon mat-list-avatar svgIcon="trending_down_white">
+            <mat-icon mat-list-avatar>
+                trending_down
             </mat-icon>
             <h3 mat-line *ngIf="showFiller">
                 Wolne miejsca
@@ -36,7 +39,8 @@
             </p>
         </a>
         <a id="trending_up" *ngIf="isHomePage" (click)="sortPlacesAsc()" mat-list-item>
-            <mat-icon mat-list-avatar svgIcon="trending_up_white">
+            <mat-icon mat-list-avatar>
+                trending_up
             </mat-icon>
             <h3 mat-line *ngIf="showFiller">
                 Zatłoczone miejsca
@@ -46,7 +50,8 @@
             </p>
         </a>
         <a id="favorite" *ngIf="isHomePage" (click)="loadFavouritePlaces()" mat-list-item>
-            <mat-icon mat-list-avatar svgIcon="favorite_white">
+            <mat-icon mat-list-avatar>
+                favorite
             </mat-icon>
             <h3 mat-line *ngIf="showFiller">
                 Ulubione
@@ -57,7 +62,8 @@
         </a>
         <div *ngIf="isHomePage">
             <a id="admin" *ngxPermissionsOnly="['A_CRUD_SUPER']" (click)="navigateToAdminPage()" mat-list-item>
-                <mat-icon mat-list-avatar svgIcon="admin_panel_settings">
+                <mat-icon mat-list-avatar>
+                    admin_panel_settings
                 </mat-icon>
                 <h3 mat-line *ngIf="showFiller">
                     Panel administratora
@@ -68,7 +74,8 @@
             </a>
         </div>
         <a id="home" *ngIf="!isHomePage" routerLink="/home" mat-list-item>
-            <mat-icon mat-list-avatar svgIcon="home">
+            <mat-icon mat-list-avatar>
+                home
             </mat-icon>
             <h3 mat-line *ngIf="showFiller">
                 Strona główna
@@ -79,7 +86,9 @@
         </a>
         <div *ngIf="isAdminPage">
         <a id="add" *ngxPermissionsOnly="['ADD_PLACE']" (click)="addNewPlace()" mat-list-item>
-            <mat-icon mat-list-avatar svgIcon="add_circle"></mat-icon>
+            <mat-icon mat-list-avatar>
+                add_circle
+            </mat-icon>
             <h3 mat-line *ngIf="showFiller">
                 Utwórz
             </h3>
@@ -98,13 +107,13 @@
             </h3>
         </a> -->
         <a id="login" *ngIf="!(authService.logged$ | async)" mat-list-item routerLink="/login">
-            <mat-icon mat-list-avatar svgIcon="login"></mat-icon>
+            <mat-icon mat-list-avatar>login</mat-icon>
             <h3 mat-line *ngIf="showFiller">
                 Zaloguj się
             </h3>
         </a>
         <a id="logout" *ngIf="authService.logged$ | async" mat-list-item (click)="logout()">
-            <mat-icon mat-list-avatar svgIcon="logout"></mat-icon>
+            <mat-icon mat-list-avatar>logout</mat-icon>
             <h3 mat-line *ngIf="showFiller">
                 Wyloguj się
             </h3>
