@@ -7,6 +7,7 @@ import { CategoryEto } from 'src/app/model/CategoryEto';
 import { OpeningHoursTo } from 'src/app/model/OpeningHoursTo';
 import { PlaceTo } from 'src/app/model/PlaceTo';
 import { CategoryService } from 'src/app/services/category.service';
+import { ImgurService } from 'src/app/services/imgur.service';
 import { PlaceService } from 'src/app/services/place.service';
 
 @Component({
@@ -20,14 +21,13 @@ export class ModifyPlaceComponent implements OnInit {
   private readonly unsubscribe = new Subject();
   categories: CategoryEto[] | undefined;
   files: File[] = [];
-  base64image: string | undefined;
-  imageName: string | undefined;
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: any,
     private _formBuilder: FormBuilder,
     public categoryService: CategoryService,
     private placeService: PlaceService,
+    private imgurService: ImgurService,
     public dialogRef: MatDialogRef<ModifyPlaceComponent>){
       this.placeForm = this._formBuilder.group({
         name: [this.data.placeCto.name, Validators.required],
@@ -37,6 +37,7 @@ export class ModifyPlaceComponent implements OnInit {
         street: [this.data.placeCto.street, Validators.required],
         buildingNumber: [this.data.placeCto.buildingNumber, Validators.required],
         apartmentNumber: [this.data.placeCto.apartmentNumber],
+        imageUrl: [this.data.placeCto.imageUrl, Validators.required],
         mondayFrom: [this.getMondayOpeningHour(), Validators.required],
         mondayTo: [this.getMondayClosingHour(), Validators.required],
         tuesdayFrom: [this.getTuesdayOpeningHour(), Validators.required],
@@ -55,9 +56,7 @@ export class ModifyPlaceComponent implements OnInit {
     }
   ngOnInit(): void {
     this.loadCategories();
-    if (this.data.placeCto.imageName) {
-      this.files.push(new File([new Blob()], this.data.placeCto.imageName))
-    }
+    this.files.push(new File([new Blob()], this.data.placeCto.imageUrl))
   }
 
   private loadCategories() {
@@ -73,14 +72,10 @@ export class ModifyPlaceComponent implements OnInit {
 
   uploadFile(event: Event) {
     const files = (event.target as HTMLInputElement).files as FileList;
-    this.files.push(files[0]);
-    var reader = new FileReader();
-    reader.readAsDataURL(files[0]);
-    this.imageName = files[0].name;
-
-    reader.onload = (e) => {
-      this.base64image = reader?.result?.toString().split("base64,")[1];
-    };
+    for (let index = 0; index < files.length; index++) {
+      const element = files[index];
+      this.files.push(element)
+    }
   }
 
   deleteAttachment(index: number) {
@@ -94,6 +89,9 @@ export class ModifyPlaceComponent implements OnInit {
 
   updatePlace() {
     if (this.placeForm.valid && this.files[0]) {
+      this.imgurService.addImage(this.files[0]).subscribe(
+        (data: any) => {
+          console.log(data)
       const placeTo = {
         name: this.placeForm.controls["name"].value,
         capacity: this.placeForm.controls["capacity"].value,
@@ -102,8 +100,7 @@ export class ModifyPlaceComponent implements OnInit {
         buildingNumber: this.placeForm.controls["buildingNumber"].value,
         apartmentNumber: this.placeForm.controls["apartmentNumber"].value,
         categoryId: this.placeForm.controls["category"].value.id,
-        imageName: this.imageName,
-        base64Image: this.base64image,
+        imageUrl: data.data.link,
         openingHoursTo: {
           mondayOpeningHour: ('0' + this.placeForm.controls["mondayFrom"].value.getHours().toString()).slice(-2) + ':' + ('0' + this.placeForm.controls["mondayFrom"].value.getMinutes().toString()).slice(-2),
           mondayClosingHour: ('0' + this.placeForm.controls["mondayTo"].value.getHours().toString()).slice(-2) + ':' + ('0' + this.placeForm.controls["mondayTo"].value.getMinutes().toString()).slice(-2),
@@ -124,6 +121,7 @@ export class ModifyPlaceComponent implements OnInit {
 
       this.placeService.updatePlace(placeTo, this.data.placeCto.id);
       this.dialogRef.close();
+    });
     }
   }
 

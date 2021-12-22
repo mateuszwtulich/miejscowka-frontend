@@ -120,9 +120,6 @@ export class SearchComponent implements OnInit {
       .pipe(takeUntil(this.unsubscribe))
       .subscribe((places) => {
         this.allPlaces = places as PlaceCto[];
-        this.allPlaces.forEach(place => {
-          place.imageUrl = "data:image/jpeg;base64," + place.imageBase64;
-        })
         this.filteredPlaces = places;
       });
   }

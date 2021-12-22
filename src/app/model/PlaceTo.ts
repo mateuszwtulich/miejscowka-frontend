@@ -8,7 +8,6 @@ export class PlaceTo {
     buildingNumber: string | undefined;
     apartmentNumber: string | undefined;
     categoryId: number | undefined;
-    imageName: string | undefined;
-    base64Image: string | undefined;
+    imageUrl: string | undefined;
     openingHoursTo: OpeningHoursTo | undefined;
 }
