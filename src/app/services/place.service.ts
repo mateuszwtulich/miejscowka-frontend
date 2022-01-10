@@ -5,6 +5,7 @@ import { BehaviorSubject, Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { PlaceCto } from '../model/PlaceCto';
 import { PlaceTo } from '../model/PlaceTo';
+import { Trend } from '../model/Trend';
 import { RestServiceUrl } from '../utils/RestServiceUrl';
 
 @Injectable({
@@ -15,6 +16,8 @@ export class PlaceService {
   private readonly unsubscribe = new Subject();
   private placesData = new BehaviorSubject<PlaceCto[]>([]);
   public places$ = this.placesData.asObservable();
+  private trendData = new BehaviorSubject<Trend>(new Trend());
+  public trend$ = this.trendData.asObservable();
   private spinnerDataSource = new BehaviorSubject(false);
   public spinner$ = this.spinnerDataSource.asObservable();
   
@@ -149,21 +152,20 @@ export class PlaceService {
     )
   }
 
-  public findTrend(): Promise<any> {
-    // this.spinnerDataSource.next(true);
-    // this.http.get<PlaceCto[]>(`${RestServiceUrl.PLACE_ENDPOINT}`)
-    // .pipe(takeUntil(this.unsubscribe))
-    // .subscribe(
-    //   (places: PlaceCto[]) => {
-    //     this.spinnerDataSource.next(false);
-    //     this.placesData.next(places);
-    //   },
-    //   (e) => {
-    //     this.snackbar.open(e.error.message, 'ERROR', { duration: 5000 });
-    //     this.spinnerDataSource.next(false);
-    //   }
-    // )
-    return Promise.resolve();
+  public findTrend(placeId: number) {
+    this.spinnerDataSource.next(true);
+    this.http.get<Trend>(`${RestServiceUrl.TREND_ENDPOINT}${placeId}/`)
+    .pipe(takeUntil(this.unsubscribe))
+    .subscribe(
+      (trend: Trend) => {
+        this.spinnerDataSource.next(false);
+        this.trendData.next(trend);
+      },
+      (e) => {
+        this.snackbar.open(e.error.message, 'ERROR', { duration: 5000 });
+        this.spinnerDataSource.next(false);
+      }
+    )
   }
 
   private updatePlaceData(placeId: number | undefined, placeCto: PlaceCto) {

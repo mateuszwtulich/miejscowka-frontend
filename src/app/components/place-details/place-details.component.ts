@@ -9,6 +9,10 @@ import { PlaceCto } from 'src/app/model/PlaceCto';
 import { PlaceService } from 'src/app/services/place.service';
 import { LocalStorageService } from '../cache/localStorage.service';
 import { single } from './data';
+import { takeUntil } from 'rxjs/operators';
+import { Subject } from 'rxjs';
+import { Trend } from 'src/app/model/Trend';
+
 
 @Component({
   selector: 'app-place-details',
@@ -22,6 +26,9 @@ export class PlaceDetailsComponent implements OnInit {
   trendingUp = false;
   trendingDown = false;
   trendingFlat = false;
+  private trend: Trend = new Trend();
+
+  private readonly unsubscribe = new Subject();
 
   // options
   schemeType = ScaleType.Ordinal;
@@ -48,13 +55,43 @@ export class PlaceDetailsComponent implements OnInit {
   ) {
     Object.assign(this, { single });
     this.place = data.place;
-    this.findTrend();
+    this.findTrend(this.place.id!);
+    this.observeOnTrend();
    }
+   
+   observeOnTrend() {
+    this.placeService.trend$
+      .pipe(takeUntil(this.unsubscribe))
+      .subscribe((place) => {
+        this.trend = place as Trend;
+        this.createData(0);
+      });
+  }
 
-  findTrend() {
-    this.placeService.findTrend().then(() => {
+  createData(day: number){
+    let openingHourString = this.place.openingHoursTo?.mondayOpeningHour
+    let openingHour = 8
+    let data = []
+    if(openingHourString!== undefined){
+      openingHour = parseInt(openingHourString?.substring(0, openingHourString.indexOf(":")));     
+    }
+    let closingHourString = this.place.openingHoursTo?.mondayClosingHour
+    let closingHour = 24
+    if(closingHourString!== undefined){
+      closingHour = parseInt(closingHourString?.substring(0, closingHourString.indexOf(":")));
+    }
+    for(let i = openingHour; i <=closingHour; i++){
+      data.push(    {
+        "name": `${i}:00`,
+        "value": this.trend.trendDayEntities[day].trendHourEntities[i].average
+      })
+    }
+    this.single = data;
+  }
+
+  findTrend(placeId: number) {
+    this.placeService.findTrend(placeId)
       this.trendingUp = true;
-    })
   }
 
   onSelect(event: any) {

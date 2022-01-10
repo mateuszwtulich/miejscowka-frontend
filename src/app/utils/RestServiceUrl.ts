@@ -1,5 +1,6 @@
 export class RestServiceUrl {
     public static BACKEND_URL: string = 'http://localhost:8080/';
+    public static TREND_URL: string = 'http://localhost:8070/';
 
     public static PLACE_ENDPOINT: string = RestServiceUrl.BACKEND_URL + 'place';
 
@@ -15,4 +16,6 @@ export class RestServiceUrl {
 
     public static IMGUR: string = 'https://api.imgur.com/3/upload';
 
+    public static TREND_ENDPOINT: string = RestServiceUrl.TREND_URL + 'trend/';
+    
 }
